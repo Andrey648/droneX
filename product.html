@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>DroneX</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+body{
+    margin:0;
+    background:#0a0a0a;
+    color:#fff;
+    font-family:'Inter',sans-serif;
+    padding-top:90px;
+}
+
+/* NAV */
+nav{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    background:rgba(0,0,0,0.7);
+    backdrop-filter:blur(10px);
+    display:flex;
+    justify-content:center;
+    z-index:1000;
+}
+
+.nav-inner{
+    width:100%;
+    max-width:1200px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 20px;
+}
+
+.nav-inner a{
+    color:#fff;
+    text-decoration:none;
+    margin-left:20px;
+    opacity:0.7;
+}
+
+.nav-inner a:hover{
+    opacity:1;
+}
+
+/* LAYOUT */
+.container{
+    display:flex;
+    gap:40px;
+    max-width:1200px;
+    margin:0 auto;
+    padding:20px;
+}
+
+.left{ flex:2; }
+.right{
+    flex:1;
+    background:#111;
+    padding:20px;
+    border-radius:20px;
+}
+
+/* IMAGE */
+.main-img{
+    width:100%;
+    border-radius:20px;
+}
+
+/* OPTIONS */
+.option-btn{
+    padding:10px;
+    border:1px solid #444;
+    border-radius:10px;
+    cursor:pointer;
+    margin-right:5px;
+}
+
+.option-btn.active{
+    border:1px solid #fff;
+}
+
+/* COLORS */
+.colors{ display:flex; gap:10px; margin-top:10px; }
+.color{
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    cursor:pointer;
+    border:2px solid transparent;
+}
+.color.active{ border:2px solid #fff; }
+
+/* BUTTON */
+.btn{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:10px;
+    margin-top:10px;
+    cursor:pointer;
+}
+.buy{ background:#00c853; }
+.fast{ background:#ff3d00; }
+
+/* PRICE */
+.price{
+    font-size:28px;
+    margin:20px 0;
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAV -->
+<nav>
+    <div class="nav-inner">
+        <div onclick="location.href='сайт дрона.html'" style="cursor:pointer;">
+            DroneX
+        </div>
+
+        <div>
+            <a href="сайт дрона.html">Главная</a>
+            <a href="cart.html">Корзина</a>
+            <a href="account.html">Кабинет</a>
+            <span onclick="goCart()">🛒 (<span id="cartCount">0</span>)</span>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+
+<div class="left">
+
+    <img src="iFlight-Nazgul-DC5-ECO-O4-Air-Unit-Pro_spje-pd.jpg" class="main-img">
+
+    <h1 id="title"></h1>
+    <p>Профессиональный дрон нового поколения</p>
+
+    <!-- CONFIG -->
+    <div>
+        <p>Комплектация:</p>
+        <span class="option-btn active" onclick="selectOption(this)">Base</span>
+        <span class="option-btn" onclick="selectOption(this)">Pro</span>
+        <span class="option-btn" onclick="selectOption(this)">Ultra</span>
+    </div>
+
+    <!-- COLORS -->
+    <div>
+        <p>Цвет:</p>
+        <div class="colors">
+            <div class="color active" style="background:white" onclick="selectColor(this)"></div>
+            <div class="color" style="background:gray" onclick="selectColor(this)"></div>
+            <div class="color" style="background:blue" onclick="selectColor(this)"></div>
+        </div>
+    </div>
+
+</div>
+
+<div class="right">
+    <div class="price" id="price"></div>
+
+    <button class="btn buy" onclick="addToCart()">В корзину</button>
+    <button class="btn fast" onclick="buyNow()">Купить сейчас</button>
+</div>
+
+</div>
+
+<script>
+
+// ===== ТОВАРЫ =====
+const products = {
+    X1:{name:"Drone X1", price:50000},
+    X2:{name:"Drone X2", price:80000},
+    PRO:{name:"Drone PRO", price:120000}
+};
+
+// ===== БЕЗОПАСНАЯ КОРЗИНА =====
+function loadCart(){
+    try{
+        let data = JSON.parse(localStorage.getItem('cart')) || [];
+        return data.filter(i => products[i]);
+    }catch{
+        return [];
+    }
+}
+
+let cart = loadCart();
+
+// ===== ПОЛУЧЕНИЕ ТОВАРА =====
+const params = new URLSearchParams(location.search);
+const drone = params.get("drone");
+
+if(!products[drone]){
+    alert("Товар не найден");
+    location.href = "сайт дрона.html";
+}
+
+// ===== ВСТАВКА =====
+document.getElementById("title").innerText = products[drone].name;
+document.getElementById("price").innerText = products[drone].price + " ₽";
+
+// ===== КОРЗИНА =====
+function addToCart(){
+    cart.push(drone);
+    save();
+    alert("Добавлено в корзину");
+}
+
+function buyNow(){
+    cart.push(drone);
+    save();
+    location.href = "cart.html";
+}
+
+function save(){
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCart();
+}
+
+function updateCart(){
+    document.getElementById("cartCount").innerText = cart.length;
+}
+
+function goCart(){
+    location.href = "cart.html";
+}
+
+updateCart();
+
+// ===== UI =====
+function selectOption(el){
+    document.querySelectorAll('.option-btn').forEach(e=>e.classList.remove('active'));
+    el.classList.add('active');
+}
+
+function selectColor(el){
+    document.querySelectorAll('.color').forEach(e=>e.classList.remove('active'));
+    el.classList.add('active');
+}
+
+</script>
+
+</body>
+</html>

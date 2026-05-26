@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Личный кабинет</title>
+
+<style>
+body{
+    margin:0;
+    background:#0a0a0a;
+    color:#fff;
+    font-family:Inter;
+    padding-top:80px;
+}
+
+/* NAV */
+nav{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    background:rgba(0,0,0,0.7);
+    backdrop-filter:blur(12px);
+    display:flex;
+    justify-content:center;
+    z-index:1000;
+}
+
+.nav-inner{
+    width:100%;
+    max-width:1200px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 20px;
+}
+
+.nav-inner a{
+    color:#fff;
+    text-decoration:none;
+    margin-left:20px;
+    opacity:0.7;
+}
+
+.nav-inner a:hover{
+    opacity:1;
+}
+
+/* CONTENT */
+.container{
+    max-width:1000px;
+    margin:0 auto;
+    padding:40px 20px;
+}
+
+.order{
+    background:#111;
+    padding:20px;
+    border-radius:20px;
+    margin-bottom:20px;
+    transition:0.3s;
+}
+
+.order:hover{
+    background:#1a1a1a;
+}
+
+.status{
+    margin-top:10px;
+    padding:5px 10px;
+    border-radius:10px;
+    display:inline-block;
+}
+
+/* статусы */
+.processing{ background:#ff9800; }
+.shipped{ background:#2196f3; }
+.delivered{ background:#4caf50; }
+
+.item{
+    opacity:0.8;
+    margin-top:5px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAV -->
+<nav>
+    <div class="nav-inner">
+        <div style="cursor:pointer;" onclick="location.href='сайт дрона.html'">
+            DroneX
+        </div>
+
+        <div>
+            <a href="сайт дрона.html">Главная</a>
+            <a href="cart.html">Корзина</a>
+            <a href="#" onclick="logout()">Выйти</a>
+        </div>
+    </div>
+</nav>
+
+<!-- CONTENT -->
+<div class="container">
+    <h1>Мои заказы</h1>
+    <div id="orders"></div>
+</div>
+
+<script>
+
+// ===== ВЫХОД =====
+function logout(){
+    localStorage.removeItem('currentUser');
+    window.location.href = "auth.html";
+}
+
+// ===== ТОВАРЫ =====
+const products = {
+    X1:"Drone X1",
+    X2:"Drone X2",
+    PRO:"Drone PRO"
+};
+
+// ===== ПРОВЕРКА ПОЛЬЗОВАТЕЛЯ =====
+let user = JSON.parse(localStorage.getItem('currentUser'));
+
+if(!user){
+    window.location.href = "auth.html";
+}
+
+// ===== ЗАКАЗ =====
+let order = JSON.parse(localStorage.getItem('lastOrder'));
+
+const container = document.getElementById('orders');
+
+if(!order){
+    container.innerHTML = "<p>Нет заказов</p>";
+} else {
+
+    let itemsHTML = "";
+
+    order.items.forEach(item=>{
+        if(products[item]){
+            itemsHTML += `<div class="item">• ${products[item]}</div>`;
+        }
+    });
+
+    const div = document.createElement('div');
+    div.className = "order";
+
+    div.innerHTML = `
+        <h2>Заказ ${order.id}</h2>
+        <p>Email: ${order.email}</p>
+
+        <div>${itemsHTML}</div>
+
+        <div class="status ${order.status}" id="status">
+            ${translate(order.status)}
+        </div>
+    `;
+
+    container.appendChild(div);
+
+    simulateStatus();
+}
+
+// ===== ПЕРЕВОД =====
+function translate(status){
+    if(status=="processing") return "В обработке";
+    if(status=="shipped") return "Отправлен";
+    if(status=="delivered") return "Доставлен";
+    return status;
+}
+
+// ===== UX АНИМАЦИЯ =====
+function simulateStatus(){
+    setTimeout(()=> updateStatus("shipped"),3000);
+    setTimeout(()=> updateStatus("delivered"),6000);
+}
+
+// ===== ОБНОВЛЕНИЕ =====
+function updateStatus(newStatus){
+
+    if(!order) return;
+
+    order.status = newStatus;
+    localStorage.setItem('lastOrder', JSON.stringify(order));
+
+    const el = document.getElementById('status');
+
+    if(el){
+        el.className = "status " + newStatus;
+        el.innerText = translate(newStatus);
+    }
+}
+
+</script>
+
+</body>
+</html>

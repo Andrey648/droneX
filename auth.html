@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Вход / Регистрация</title>
+
+<style>
+body{
+    background:#000;
+    color:#fff;
+    font-family:Inter;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.box{
+    background:#111;
+    padding:30px;
+    border-radius:20px;
+    width:300px;
+}
+
+input{
+    width:100%;
+    padding:10px;
+    margin-top:10px;
+    border:none;
+    border-radius:10px;
+    background:#222;
+    color:#fff;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    margin-top:15px;
+    border:none;
+    border-radius:10px;
+    background:#0071e3;
+    color:#fff;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#005fcc;
+}
+
+.toggle{
+    margin-top:10px;
+    text-align:center;
+    cursor:pointer;
+    opacity:0.7;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+<h2 id="title">Вход</h2>
+
+<input id="email" placeholder="Email">
+<input id="password" type="password" placeholder="Пароль">
+
+<button onclick="submit()">Продолжить</button>
+
+<div class="toggle" onclick="toggleMode()">
+    Нет аккаунта? Зарегистрироваться
+</div>
+
+</div>
+
+<script>
+let user = JSON.parse(localStorage.getItem('currentUser'));
+
+if(!user){
+    window.location.href = "auth.html";
+}
+let isLogin = true;
+
+function toggleMode(){
+    isLogin = !isLogin;
+
+    document.getElementById('title').innerText = isLogin ? "Вход" : "Регистрация";
+    document.querySelector('.toggle').innerText = 
+        isLogin ? "Нет аккаунта? Зарегистрироваться" : "Уже есть аккаунт? Войти";
+}
+
+function submit(){
+
+    let email = document.getElementById('email').value;
+    let password = document.getElementById('password').value;
+
+    if(!email.includes("@") || password.length < 4){
+        alert("Ошибка данных");
+        return;
+    }
+
+    let users = JSON.parse(localStorage.getItem('users')) || [];
+
+    if(isLogin){
+        // LOGIN
+        let user = users.find(u => u.email === email && u.password === password);
+
+        if(!user){
+            alert("Неверный логин или пароль");
+            return;
+        }
+
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        window.location.href = "account.html";
+
+    } else {
+        // REGISTER
+        let exist = users.find(u => u.email === email);
+
+        if(exist){
+            alert("Пользователь уже существует");
+            return;
+        }
+
+        let newUser = { email, password };
+
+        users.push(newUser);
+        localStorage.setItem('users', JSON.stringify(users));
+        localStorage.setItem('currentUser', JSON.stringify(newUser));
+
+        window.location.href = "account.html";
+    }
+}
+
+</script>
+
+</body>
+</html>

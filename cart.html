@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Корзина</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin:0;
+    background:#0a0a0a;
+    color:#fff;
+    font-family:'Inter',sans-serif;
+    padding-top:80px;
+}
+
+nav {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(12px);
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    z-index: 1000;
+}
+nav a {
+    color:#fff;
+    text-decoration:none;
+    margin-left:20px;
+    opacity:0.7;
+}
+
+nav a:hover {
+    opacity:1;
+}
+
+.cart {
+    margin-left:20px;
+    cursor:pointer;
+}
+
+/* LAYOUT */
+.container {
+    display:flex;
+    gap:40px;
+    padding:40px;
+    max-width:1200px;
+    margin:0 auto;
+}
+
+/* LEFT */
+.items {
+    flex:2;
+}
+
+.item {
+    display:flex;
+    align-items:center;
+    background:#111;
+    padding:15px;
+    border-radius:20px;
+    margin-bottom:15px;
+    gap:15px;
+    transition:0.3s;
+}
+
+.item:hover {
+    background:#1a1a1a;
+}
+
+.item img {
+    width:80px;
+    height:80px;
+    object-fit:cover;
+    border-radius:10px;
+}
+
+.item h3 {
+    font-size:16px;
+}
+
+/* CONTROLS */
+.controls {
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-left:20px;
+}
+
+.controls button {
+    width:30px;
+    height:30px;
+    border:none;
+    background:#222;
+    color:#fff;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+.controls button:hover {
+    background:#333;
+}
+
+.price {
+    margin-left:auto;
+    font-weight:600;
+}
+
+.delete {
+    margin-left:10px;
+    cursor:pointer;
+    color:#ff4d4d;
+    font-size:18px;
+}
+
+/* RIGHT */
+.summary {
+    flex:1;
+    background:#111;
+    padding:20px;
+    border-radius:20px;
+    height:fit-content;
+    position:sticky;
+    top:100px;
+}
+
+.summary h2 {
+    margin-bottom:10px;
+}
+
+.total {
+    font-size:24px;
+    margin:20px 0;
+    font-weight:600;
+}
+
+.btn {
+    width:100%;
+    padding:15px;
+    border:none;
+    background:#0071e3;
+    color:#fff;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:16px;
+    transition:0.3s;
+}
+
+.btn:hover {
+    background:#005fcc;
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+    <div>DroneX</div>
+    <div>
+        <a href="сайт дрона.html">Главная</a>
+        <a href="cart.html">Корзина</a>
+        <a href="account.html">Кабинет</a> <!-- ВОТ СЮДА -->
+        <span class="cart">  (<span id="cartCount">0</span>)</span>
+    </div>
+</nav>
+
+<div class="container">
+
+<div class="items" id="items"></div>
+
+<div class="summary">
+    <h2>Ваша корзина</h2>
+    <div class="total" id="total">0 ₽</div>
+    <button class="btn" onclick="openCheckout()">Оплатить</button>
+</div>
+
+</div>
+
+<script>
+
+// ТОВАРЫ
+const products = {
+    X1: {name:"Drone X1", price:50000, img:"iFlight-Nazgul-DC5-ECO-O4-Air-Unit-Pro_spje-pd.jpg"},
+    X2: {name:"Drone X2", price:80000, img:"iFlight-Nazgul-DC5-ECO-O4-Air-Unit-Pro_spje-pd.jpg"},
+    PRO:{name:"Drone PRO", price:120000, img:"iFlight-Nazgul-DC5-ECO-O4-Air-Unit-Pro_spje-pd.jpg"}
+};
+
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+function render() {
+    const container = document.getElementById('items');
+    container.innerHTML = "";
+
+    let total = 0;
+
+    cart.forEach((item, index) => {
+        const p = products[item];
+        if(!p) return;
+
+        total += p.price;
+
+        const div = document.createElement('div');
+        div.className = "item";
+
+div.innerHTML = `
+    <div style="display:flex; align-items:center; gap:15px; cursor:pointer; width:100%"
+         onclick="openProduct('${item}')">
+
+        <img src="${p.img}">
+
+        <h3>${p.name}</h3>
+
+        <div class="controls" onclick="event.stopPropagation()">
+            <button onclick="removeOne(${index})">−</button>
+            <span>1</span>
+            <button onclick="addOne('${item}')">+</button>
+        </div>
+
+        <div class="price">${p.price} ₽</div>
+
+        <div class="delete" onclick="event.stopPropagation(); removeItem(${index})">✕</div>
+    </div>
+`;
+
+        container.appendChild(div);
+    });
+
+    document.getElementById('total').innerText = "Итого: " + total + " ₽";
+    document.getElementById('cartCount').innerText = cart.length;
+}
+
+function addOne(item){
+    cart.push(item);
+    save();
+}
+
+function removeOne(index){
+    cart.splice(index,1);
+    save();
+}
+
+function removeItem(index){
+    cart.splice(index,1);
+    save();
+}
+
+function save(){
+    localStorage.setItem('cart', JSON.stringify(cart));
+    render();
+}
+
+render();
+
+</script>
+
+
+
+
+<div id="checkout" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); justify-content:center; align-items:center;">
+    
+    <div style="background:#111; padding:25px; border-radius:20px; width:320px; animation:pop 0.3s ease;">
+        
+        <h2>Checkout</h2>
+
+        <input id="email" placeholder="Email" style="width:100%; padding:10px; margin-top:10px;">
+        <input placeholder="Card number" style="width:100%; padding:10px; margin-top:10px;">
+        <input placeholder="MM/YY" style="width:100%; padding:10px; margin-top:10px;">
+        <input placeholder="CVC" style="width:100%; padding:10px; margin-top:10px;">
+
+        <button class="btn" onclick="pay()" style="margin-top:15px;">Оплатить</button>
+        <button onclick="closeCheckout()" style="margin-top:10px; width:100%;">Отмена</button>
+    </div>
+</div>
+
+
+<script>
+function openProduct(id){
+    window.location.href = "product.html?drone=" + id;
+}
+function openCheckout(){
+    document.getElementById('checkout').style.display = "flex";
+}
+
+function closeCheckout(){
+    document.getElementById('checkout').style.display = "none";
+}
+
+function pay(){
+    let email = document.getElementById('email').value;
+
+    let order = {
+        id: "ORD-" + Math.floor(Math.random()*999999),
+        email: email,
+        items: JSON.parse(localStorage.getItem('cart')) || [],
+        status: "processing"
+    };
+
+    localStorage.setItem('lastOrder', JSON.stringify(order));
+    localStorage.removeItem('cart');
+
+    window.location.href = "thanks.html";
+}
+
+</script>
+1
+
+</body>
+</html>
