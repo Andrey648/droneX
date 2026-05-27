@@ -7,8 +7,16 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
+<canvas id="stars"></canvas>
 
 <style>
+    a {
+    color: #0a84ff;
+}
+
+a:hover {
+    text-decoration: underline;
+}
 * {
     margin: 0;
     padding: 0;
@@ -64,6 +72,412 @@ nav a:hover {
     opacity: 0.6;
     margin: 20px 0;
 }
+
+/* BUTTON */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 12px 22px;
+    border-radius: 999px;
+
+    border: 1px solid #fff;
+    background: transparent;
+
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+
+    text-decoration: none;
+    cursor: pointer;
+
+    transition: 0.25s ease;
+    gap: 6px;
+}
+
+/* hover */
+.btn:hover {
+    background: #fff;
+    color: #000;
+    transform: translateY(-2px);
+}
+
+/* click effect */
+.btn:active {
+    transform: translateY(0px);
+}
+
+/* убрать дефолтные стили кнопки */
+button.btn {
+    font-family: inherit;
+}
+
+/* SECTIONS */
+section {
+    padding: 100px 40px;
+}
+
+/* PRODUCTS */
+.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+    gap: 30px;
+}
+
+.card {
+    background: #111;
+    padding: 20px;
+    border-radius: 20px;
+    transition: 0.4s;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    background: #000000;
+}
+
+.card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+/* CONFIG */
+.config select, .config button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 10px;
+    border: none;
+}
+
+/* FOUNDER */
+.founder {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    align-items: center;
+}
+
+.founder img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* ANIMATION */
+.fade {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: 1s;
+}
+
+.fade.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* CART */
+.cart {
+    cursor: pointer;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+    .hero h1 {font-size: 40px;}
+}
+#stars {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+}
+
+</style>
+</head>
+<!-- SECURITY -->
+<meta http-equiv="Content-Security-Policy" content="
+default-src 'self';
+img-src 'self' data:;
+style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+font-src https://fonts.gstatic.com;
+script-src 'self' 'unsafe-inline';
+">
+
+<meta http-equiv="X-Frame-Options" content="DENY">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta name="referrer" content="no-referrer">
+
+<body>
+
+<nav>
+    <div>DroneX</div>
+    <div>
+        <a href="#hero">Главная</a>
+        <a href="#products">Товары</a>
+        <a href="#config">Конфигуратор</a>
+        <a href="auth.html">Войти</a>
+        <a href="account.html">Кабинет</a> <!-- ВОТ СЮДА -->
+        <span class="cart" onclick="goCart()">🛒 (<span id="cartCount">0</span>)</span>
+    </div>
+</nav>
+
+<section id="hero" class="hero">
+    <h1 class="fade">DroneX</h1>
+    <p class="fade">Будущее дронов</p>
+    <a href="#products" class="btn fade">Смотреть</a>
+</section>
+
+<section id="products">
+    <h2 class="fade">Наши дроны</h2>
+
+    <div class="products">
+
+        <div class="card fade">
+            <img src="iFlight-Nazgul-DC5-ECO-O4-Air-Unit-Pro_spje-pd.jpg">
+            <h3>Drone X1</h3>
+            <a href="product.html?drone=X1" class="btn">Подробнее</a>
+            <button class="btn" onclick="addToCart('X1')">В корзину</button>
+        </div>
+
+        <div class="card fade">
+            <img src="iFlight-Nazgul-DC5-ECO-O4-Air-Unit-Pro_spje-pd.jpg">
+            <h3>Drone X2</h3>
+            <a href="product.html?drone=X2" class="btn">Подробнее</a>
+            <button class="btn" onclick="addToCart('X2')">В корзину</button>
+        </div>
+
+        <div class="card fade">
+            <img src="iFlight-Nazgul-DC5-ECO-O4-Air-Unit-Pro_spje-pd.jpg">
+            <h3>Drone Pro</h3>
+            <a href="product.html?drone=PRO" class="btn">Подробнее</a>
+            <button class="btn" onclick="addToCart('PRO')">В корзину</button>
+        </div>
+
+    </div>
+</section>
+
+<section id="config" class="config">
+    <h2 class="fade">Собери свой дрон</h2>
+
+    <select id="camera">
+        <option>FULLHD</option>
+        <option>2K</option>
+    </select>
+
+    <select id="battery">
+        <option>6S</option>
+        <option>4S</option>
+        <option>8S</option>
+    </select>
+
+    <select id="engine">
+        <option>Обычный</option>
+        <option>Pro version </option>
+    </select>
+
+    <button onclick="buildDrone()" class="btn">Собрать</button>
+    <div id="result"></div>
+</section>
+
+<section class="founder">
+    <img src="Z.jpg" class="fade">
+    <div>
+        <h2 class="fade">Основатель</h2>
+        <p class="fade">Создатель проекта вдохновился будущими технологиями и разработал автономные дроны.
+            DroneX — это проект, направленный на создание доступных и мощных дронов для каждого.
+
+Разработка была представлена в МГТУ им. Н.Э. Баумана, одном из ведущих технических вузов России, где заняла 3 место, подтвердив высокий уровень реализации и перспективность идеи.
+
+Наша цель — сделать профессиональные технологии автономного полёта доступными не только крупным компаниям, но и обычным пользователям, открывая новые возможности для съёмки, мониторинга и творчества.
+        </p>
+    </div>
+</section>
+
+<script>
+const fades = document.querySelectorAll('.fade');
+
+function showOnScroll() {
+    fades.forEach(el => {
+        const top = el.getBoundingClientRect().top;
+        if (top < window.innerHeight - 100) {
+            el.classList.add('show');
+        }
+    });
+}
+
+window.addEventListener('scroll', showOnScroll);
+showOnScroll();
+
+// CART
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+function addToCart(item) {
+    cart.push(item);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCart();
+}
+
+function updateCart() {
+    document.getElementById('cartCount').innerText = cart.length;
+}
+
+function goCart() {
+    window.location.href = "cart.html";
+}
+
+updateCart();
+
+// CONFIG
+function buildDrone() {
+    result.innerText = camera.value + ", " + battery.value + ", " + engine.value;
+}
+</script>
+<script>
+const canvas = document.getElementById("stars");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+// обычные звезды
+let stars = [];
+
+for (let i = 0; i < 150; i++) {
+    stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size: Math.random() * 2
+    });
+}
+
+// метеоры
+let meteors = [];
+
+function createMeteor() {
+    meteors.push({
+        x: Math.random() * canvas.width,
+        y: 0,
+        vx: -(Math.random() * 4 + 2),
+        vy: (Math.random() * 6 + 3),
+        alpha: 1
+    });
+}
+
+// каждые 1.5 сек падающая звезда
+setInterval(createMeteor, 1500);
+
+function draw() {
+    // мягкое затухание (даёт след)
+    ctx.fillStyle = "rgba(0, 0, 0, 0.25)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // звезды
+    ctx.fillStyle = "white";
+    stars.forEach(s => {
+        ctx.fillRect(s.x, s.y, s.size, s.size);
+    });
+
+    // метеоры
+    meteors.forEach((m, i) => {
+        const prevX = m.x;
+        const prevY = m.y;
+
+        m.x += m.vx;
+        m.y += m.vy;
+        m.alpha -= 0.01;
+
+        ctx.strokeStyle = `rgba(255,255,255,${m.alpha})`;
+        ctx.lineWidth = 2;
+
+        ctx.beginPath();
+        ctx.moveTo(prevX, prevY);
+        ctx.lineTo(m.x, m.y);
+        ctx.stroke();
+
+        if (m.alpha <= 0) {
+            meteors.splice(i, 1);
+        }
+    });
+
+    requestAnimationFrame(draw);
+}
+
+draw();
+
+// resize
+window.addEventListener("resize", () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
+</script>
+</body>
+</html>
+
+<footer style="padding:40px; background:#000; color:#888; font-size:12px; line-height:1.6; border-top:1px solid #222;">
+
+<p>
+① Trade-in value depends on the condition, year, and configuration of your device. Not all devices are eligible. You must be at least 18 years old to trade in a device for credit or a gift card. The trade-in value may be applied toward a new device purchase. Final value is determined after inspection. Additional taxes may apply under the laws of the Russian Federation. Valid ID may be required. Terms and conditions apply.
+</p>
+
+<br>
+
+<p>
+② For new subscribers only. Subscription renews automatically after trial period unless canceled. Offer available for eligible devices with latest software installed. One offer per account. Additional restrictions may apply.
+</p>
+
+<br>
+
+<p>
+1. Special discounts may be available for eligible customers. Please check availability before purchase.
+</p>
+
+<br><br>
+
+<div style="border-top:1px solid #222; padding-top:20px; display:flex; flex-wrap:wrap; gap:40px;">
+
+<div>
+<strong style="color:#fff;">DroneX Store</strong><br>
+Drones<br>
+</div>
+
+<div>
+<strong style="color:#fff;">Support</strong><br>
+Shipping<br>
+Payment<br>
+Warranty<br>
+Returns
+Telegram:<br> 
+<a href="https://web.telegram.org/k/#-1825919000" target="_blank">@droneX_support</a>
+</div>
+
+<div>
+<strong style="color:#fff;">Company</strong><br>
+About<br>
+Contacts<br>
+Privacy Policy<br> 
+Telegram: <a href="https://web.telegram.org/k/#-1825919000" target="_blank">@droneX</a>
+</div>
+
+</div>
+
+<br><br>
+
+<p style="opacity:0.5;">
+Russia | © 2026 DroneX. All rights reserved.
+</p>
+
+<p style="opacity:0.5;">
+Privacy Policy | Terms of Use | Sales Terms | Legal | Site Map
+</p>
+
+</footer>}
 
 /* BUTTON */
 .btn {
