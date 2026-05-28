@@ -200,6 +200,83 @@ section {
     pointer-events: none;
 }
 
+/* ===== MOBILE FIX ===== */
+@media (max-width: 768px){
+
+    /* NAV */
+    nav{
+        padding:10px 15px;
+        flex-direction:column;
+        gap:10px;
+    }
+
+    nav div{
+        display:flex;
+        flex-wrap:wrap;
+        justify-content:center;
+        gap:10px;
+    }
+
+    /* HERO */
+    .hero h1{
+        font-size:40px;
+        text-align:center;
+    }
+
+    .hero p{
+        text-align:center;
+        padding:0 10px;
+    }
+
+    /* PRODUCTS */
+    .products{
+        grid-template-columns: 1fr;
+    }
+
+    .card{
+        padding:15px;
+    }
+
+    .card img{
+        height:180px;
+    }
+
+    /* CONTAINER (если есть flex как в product/cart) */
+    .container{
+        flex-direction:column;
+        padding:15px;
+    }
+
+    .left, .right{
+        width:100%;
+    }
+
+    /* CART ITEMS */
+    .item{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .controls{
+        margin-left:0;
+        margin-top:10px;
+    }
+
+    .price{
+        margin-left:0;
+        margin-top:10px;
+    }
+
+    /* FOUNDER */
+    .founder{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .founder img{
+        margin:0 auto;
+    }
+}
 </style>
 </head>
 <!-- SECURITY -->
