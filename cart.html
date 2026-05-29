@@ -2,246 +2,244 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<title>Корзина</title>
+
+<!-- 🔥 ВАЖНО ДЛЯ IPHONE -->
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+<title>Корзина DroneX</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-body {
-    margin:0;
-    background:#0a0a0a;
-    color:#fff;
-    font-family:'Inter',sans-serif;
-    padding-top:80px;
+
+:root{
+    --bg:#0a0a0a;
+    --card:#111;
+    --accent:#0071e3;
+    --green:#00e676;
+    --red:#ff4d4d;
 }
 
-nav {
-    position: fixed;
-    width: 100%;
-    top: 0;
-    background: rgba(0,0,0,0.7);
-    backdrop-filter: blur(12px);
-    padding: 15px 40px;
-    display: flex;
-    justify-content: space-between;
-    z-index: 1000;
-}
-nav a {
-    color:#fff;
-    text-decoration:none;
-    margin-left:20px;
-    opacity:0.7;
+/* RESET */
+body{
+margin:0;
+font-family:Inter;
+background:var(--bg);
+color:#fff;
+
+/* 🔥 SAFE AREA IPHONE */
+padding-top:calc(80px + env(safe-area-inset-top));
+padding-left:env(safe-area-inset-left);
+padding-right:env(safe-area-inset-right);
 }
 
-nav a:hover {
-    opacity:1;
+/* NAV */
+nav{
+position:fixed;
+top:0;
+left:0;
+right:0;
+z-index:1000;
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+gap:10px;
+
+padding:12px 20px;
+padding-top:calc(12px + env(safe-area-inset-top));
+
+background:rgba(0,0,0,0.7);
+backdrop-filter: blur(12px);
+border-bottom:1px solid rgba(255,255,255,0.05);
 }
 
-.cart {
-    margin-left:20px;
-    cursor:pointer;
+nav a{
+color:#fff;
+text-decoration:none;
+margin-left:12px;
+opacity:0.7;
+font-size:14px;
 }
+
+nav a:hover{opacity:1}
 
 /* LAYOUT */
-.container {
-    display:flex;
-    gap:40px;
-    padding:40px;
-    max-width:1200px;
-    margin:0 auto;
+.container{
+display:flex;
+gap:20px;
+max-width:1100px;
+margin:0 auto;
+padding:15px;
 }
 
-/* LEFT */
-.items {
-    flex:2;
+/* ITEMS */
+.items{
+flex:2;
 }
 
-.item {
-    display:flex;
-    align-items:center;
-    background:#111;
-    padding:15px;
-    border-radius:20px;
-    margin-bottom:15px;
-    gap:15px;
-    transition:0.3s;
+.item{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:12px;
+
+background:var(--card);
+padding:12px;
+border-radius:16px;
+margin-bottom:12px;
 }
 
-.item:hover {
-    background:#1a1a1a;
+.item img{
+width:70px;
+height:70px;
+object-fit:cover;
+border-radius:10px;
 }
 
-.item img {
-    width:80px;
-    height:80px;
-    object-fit:cover;
-    border-radius:10px;
-}
-
-.item h3 {
-    font-size:16px;
+.item h3{
+font-size:14px;
+margin:0;
 }
 
 /* CONTROLS */
-.controls {
-    display:flex;
-    align-items:center;
-    gap:10px;
-    margin-left:20px;
+.controls{
+display:flex;
+align-items:center;
+gap:8px;
 }
 
-.controls button {
-    width:30px;
-    height:30px;
-    border:none;
-    background:#222;
-    color:#fff;
-    border-radius:5px;
-    cursor:pointer;
+.controls button{
+width:38px;
+height:38px;
+border:none;
+border-radius:10px;
+background:#222;
+color:#fff;
+font-size:18px;
+cursor:pointer;
 }
 
-.controls button:hover {
-    background:#333;
+/* 🔥 БОЛЬШЕ ТАЧ-ЗОНЫ */
+.controls button:active{
+transform:scale(0.95);
 }
 
-.price {
-    margin-left:auto;
-    font-weight:600;
+.price{
+font-weight:600;
+color:#fff;
+white-space:nowrap;
 }
 
-.delete {
-    margin-left:10px;
-    cursor:pointer;
-    color:#ff4d4d;
-    font-size:18px;
+.delete{
+color:var(--red);
+font-size:20px;
+cursor:pointer;
+padding:8px;
 }
 
-/* RIGHT */
-.summary {
-    flex:1;
-    background:#111;
-    padding:20px;
-    border-radius:20px;
-    height:fit-content;
-    position:sticky;
-    top:100px;
+/* SUMMARY */
+.summary{
+flex:1;
+background:var(--card);
+padding:18px;
+border-radius:16px;
+height:fit-content;
+position:sticky;
+top:90px;
 }
 
-.summary h2 {
-    margin-bottom:10px;
+.total{
+font-size:22px;
+margin:15px 0;
+color:var(--green);
+font-weight:600;
 }
 
-.total {
-    font-size:24px;
-    margin:20px 0;
-    font-weight:600;
+/* BUTTON */
+.btn{
+width:100%;
+padding:14px;
+border:none;
+background:var(--accent);
+color:#fff;
+border-radius:12px;
+font-size:16px;
+cursor:pointer;
 }
 
-.btn {
-    width:100%;
-    padding:15px;
-    border:none;
-    background:#0071e3;
-    color:#fff;
-    border-radius:10px;
-    cursor:pointer;
-    font-size:16px;
-    transition:0.3s;
+.btn:active{
+transform:scale(0.98);
 }
 
-.btn:hover {
-    background:#005fcc;
+/* 🔥 IPHONE FIX */
+@media(max-width:768px){
+
+.container{
+flex-direction:column;
+padding:10px;
 }
-    /* ===== MOBILE FIX ===== */
-@media (max-width: 768px){
 
-    /* NAV */
-    nav{
-        padding:10px 15px;
-        flex-direction:column;
-        gap:10px;
-    }
-
-    nav div{
-        display:flex;
-        flex-wrap:wrap;
-        justify-content:center;
-        gap:10px;
-    }
-
-    /* HERO */
-    .hero h1{
-        font-size:40px;
-        text-align:center;
-    }
-
-    .hero p{
-        text-align:center;
-        padding:0 10px;
-    }
-
-    /* PRODUCTS */
-    .products{
-        grid-template-columns: 1fr;
-    }
-
-    .card{
-        padding:15px;
-    }
-
-    .card img{
-        height:180px;
-    }
-
-    /* CONTAINER (если есть flex как в product/cart) */
-    .container{
-        flex-direction:column;
-        padding:15px;
-    }
-
-    .left, .right{
-        width:100%;
-    }
-
-    /* CART ITEMS */
-    .item{
-        flex-direction:column;
-        align-items:flex-start;
-    }
-
-    .controls{
-        margin-left:0;
-        margin-top:10px;
-    }
-
-    .price{
-        margin-left:0;
-        margin-top:10px;
-    }
-
-    /* FOUNDER */
-    .founder{
-        flex-direction:column;
-        text-align:center;
-    }
-
-    .founder img{
-        margin:0 auto;
-    }
+.item{
+flex-direction:column;
+align-items:flex-start;
 }
+
+.controls{
+margin-top:10px;
+}
+
+.price{
+margin-top:10px;
+}
+
+.summary{
+position:static;
+}
+}
+
+/* CHECKOUT */
+#checkout{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.85);
+justify-content:center;
+align-items:center;
+padding:20px;
+}
+
+.checkout-box{
+background:#111;
+width:100%;
+max-width:360px;
+border-radius:16px;
+padding:20px;
+}
+
+input{
+width:100%;
+padding:12px;
+margin-top:10px;
+border-radius:10px;
+border:none;
+background:#1a1a1a;
+color:#fff;
+}
+
 </style>
 </head>
 
 <body>
 
 <nav>
-    <div>DroneX</div>
-    <div>
-        <a href="index.html">Главная</a>
-        <a href="cart.html">Корзина</a>
-        <a href="account.html">Кабинет</a> <!-- ВОТ СЮДА -->
-        <span class="cart">  (<span id="cartCount">0</span>)</span>
-    </div>
+<div>DroneX</div>
+<div>
+<a href="index.html">Главная</a>
+<a href="cart.html">Корзина</a>
+<a href="account.html">Кабинет</a>
+</div>
 </nav>
 
 <div class="container">
@@ -249,140 +247,124 @@ nav a:hover {
 <div class="items" id="items"></div>
 
 <div class="summary">
-    <h2>Ваша корзина</h2>
-    <div class="total" id="total">0 ₽</div>
-    <button class="btn" onclick="openCheckout()">Оплатить</button>
+<h2>Корзина</h2>
+<div class="total" id="total">0 ₽</div>
+<button class="btn" onclick="openCheckout()">Оплатить</button>
 </div>
 
+</div>
+
+<!-- CHECKOUT -->
+<div id="checkout">
+<div class="checkout-box">
+
+<h2>Оплата</h2>
+
+<input id="email" placeholder="Email">
+<input placeholder="Card number">
+<input placeholder="MM/YY">
+<input placeholder="CVC">
+
+<button class="btn" onclick="pay()" style="margin-top:15px;">Оплатить</button>
+<button class="btn" style="background:#333;margin-top:10px;" onclick="closeCheckout()">Отмена</button>
+
+</div>
 </div>
 
 <script>
 
-// ТОВАРЫ
 const products = {
-    X1: {name:"Drone X1", price:50000, img:"iFlight-Nazgul-DC5-ECO-O4-Air-Unit-Pro_spje-pd.jpg"},
-    X2: {name:"Drone X2", price:80000, img:"iFlight-Nazgul-DC5-ECO-O4-Air-Unit-Pro_spje-pd.jpg"},
-    PRO:{name:"Drone PRO", price:120000, img:"iFlight-Nazgul-DC5-ECO-O4-Air-Unit-Pro_spje-pd.jpg"}
+X1:{name:"Drone X1",price:50000,img:"iFlight-Nazgul-DC5-ECO-O4-Air-Unit-Pro_spje-pd.jpg"},
+X2:{name:"Drone X2",price:80000,img:"iFlight-Nazgul-DC5-ECO-O4-Air-Unit-Pro_spje-pd.jpg"},
+PRO:{name:"Drone PRO",price:120000,img:"iFlight-Nazgul-DC5-ECO-O4-Air-Unit-Pro_spje-pd.jpg"}
 };
 
-let cart = JSON.parse(localStorage.getItem('cart')) || [];
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-function render() {
-    const container = document.getElementById('items');
-    container.innerHTML = "";
+function render(){
 
-    let total = 0;
+const box = document.getElementById("items");
+box.innerHTML = "";
 
-    cart.forEach((item, index) => {
-        const p = products[item];
-        if(!p) return;
+let total = 0;
 
-        total += p.price;
+if(cart.length === 0){
+box.innerHTML = "<p>Корзина пуста</p>";
+document.getElementById("total").innerText = "0 ₽";
+return;
+}
 
-        const div = document.createElement('div');
-        div.className = "item";
+cart.forEach((id,i)=>{
+
+const p = products[id];
+if(!p) return;
+
+total += p.price;
+
+const div = document.createElement("div");
+div.className = "item";
 
 div.innerHTML = `
-    <div style="display:flex; align-items:center; gap:15px; cursor:pointer; width:100%"
-         onclick="openProduct('${item}')">
+<img src="${p.img}">
+<div>
+<h3>${p.name}</h3>
 
-        <img src="${p.img}">
+<div class="controls">
+<button onclick="minus(${i})">−</button>
+<span>1</span>
+<button onclick="plus('${id}')">+</button>
+</div>
+</div>
 
-        <h3>${p.name}</h3>
-
-        <div class="controls" onclick="event.stopPropagation()">
-            <button onclick="removeOne(${index})">−</button>
-            <span>1</span>
-            <button onclick="addOne('${item}')">+</button>
-        </div>
-
-        <div class="price">${p.price} ₽</div>
-
-        <div class="delete" onclick="event.stopPropagation(); removeItem(${index})">✕</div>
-    </div>
+<div class="price">${p.price} ₽</div>
+<div class="delete" onclick="removeItem(${i})">✕</div>
 `;
 
-        container.appendChild(div);
-    });
+box.appendChild(div);
+});
 
-    document.getElementById('total').innerText = "Итого: " + total + " ₽";
-    document.getElementById('cartCount').innerText = cart.length;
+document.getElementById("total").innerText = total + " ₽";
 }
 
-function addOne(item){
-    cart.push(item);
-    save();
+function plus(id){
+cart.push(id);
+save();
 }
 
-function removeOne(index){
-    cart.splice(index,1);
-    save();
+function minus(i){
+cart.splice(i,1);
+save();
 }
 
-function removeItem(index){
-    cart.splice(index,1);
-    save();
+function removeItem(i){
+cart.splice(i,1);
+save();
 }
 
 function save(){
-    localStorage.setItem('cart', JSON.stringify(cart));
-    render();
+localStorage.setItem("cart",JSON.stringify(cart));
+render();
+}
+
+/* CHECKOUT */
+function openCheckout(){
+document.getElementById("checkout").style.display="flex";
+}
+
+function closeCheckout(){
+document.getElementById("checkout").style.display="none";
+}
+
+function pay(){
+localStorage.removeItem("cart");
+cart=[];
+save();
+location.href="thanks.html";
 }
 
 render();
 
 </script>
-
-
-
-
-<div id="checkout" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); justify-content:center; align-items:center;">
-    
-    <div style="background:#111; padding:25px; border-radius:20px; width:320px; animation:pop 0.3s ease;">
-        
-        <h2>Checkout</h2>
-
-        <input id="email" placeholder="Email" style="width:100%; padding:10px; margin-top:10px;">
-        <input placeholder="Card number" style="width:100%; padding:10px; margin-top:10px;">
-        <input placeholder="MM/YY" style="width:100%; padding:10px; margin-top:10px;">
-        <input placeholder="CVC" style="width:100%; padding:10px; margin-top:10px;">
-
-        <button class="btn" onclick="pay()" style="margin-top:15px;">Оплатить</button>
-        <button onclick="closeCheckout()" style="margin-top:10px; width:100%;">Отмена</button>
-    </div>
-</div>
-
-
-<script>
-function openProduct(id){
-    window.location.href = "product.html?drone=" + id;
-}
-function openCheckout(){
-    document.getElementById('checkout').style.display = "flex";
-}
-
-function closeCheckout(){
-    document.getElementById('checkout').style.display = "none";
-}
-
-function pay(){
-    let email = document.getElementById('email').value;
-
-    let order = {
-        id: "ORD-" + Math.floor(Math.random()*999999),
-        email: email,
-        items: JSON.parse(localStorage.getItem('cart')) || [],
-        status: "processing"
-    };
-
-    localStorage.setItem('lastOrder', JSON.stringify(order));
-    localStorage.removeItem('cart');
-
-    window.location.href = "thanks.html";
-}
-
-</script>
-
 
 </body>
 </html>
