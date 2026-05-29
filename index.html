@@ -277,6 +277,102 @@ section {
         margin:0 auto;
     }
 }
+
+/* ===== УБИРАЕМ КРИВОЕ ВЫДЕЛЕНИЕ ===== */
+::selection {
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+}
+
+button, a {
+    user-select: none;
+}
+
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+
+
+/* ===== ЦЕНТРИРОВАНИЕ ===== */
+.center-btn{
+    display: flex;
+    justify-content: center;
+    margin-top: 60px;
+}
+
+
+/* ===== КНОПКА ===== */
+.cta-btn{
+    position: relative;
+
+    font-size: 26px;
+    padding: 18px 30px;
+
+    background: #000;
+    color: #fff;
+
+    border: 2px solid #fff;
+    border-radius: 8px;
+
+    font-weight: 700;
+    letter-spacing: 2px;
+
+    cursor: pointer;
+    overflow: hidden;
+
+    transition: all 0.25s ease;
+}
+
+
+/* ===== АНИМАЦИЯ СВЕЧЕНИЯ (главный эффект) ===== */
+.cta-btn::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,0.6),
+        transparent
+    );
+
+    transition: 0.5s;
+}
+
+/* при наведении пробегает свет */
+.cta-btn:hover::before{
+    left: 100%;
+}
+
+
+/* ===== HOVER ===== */
+.cta-btn:hover{
+    background: #fff;
+    color: #000;
+    transform: translateY(-3px);
+}
+
+
+/* ===== НАЖАТИЕ ===== */
+.cta-btn:active{
+    transform: scale(0.95);
+}
+
+
+/* ===== ПУЛЬСАЦИЯ (привлекает внимание) ===== */
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 rgba(255,255,255,0.2); }
+    50% { box-shadow: 0 0 20px rgba(255,255,255,0.4); }
+    100% { box-shadow: 0 0 0 rgba(255,255,255,0.2); }
+}
+
+.cta-btn{
+    animation: pulse 2s infinite;
+}
 </style>
 </head>
 <!-- SECURITY -->
@@ -342,12 +438,12 @@ script-src 'self' 'unsafe-inline';
 </section>
 
 <section id="config" class="config">
-    <h2 class="fade">Собери свой дрон</h2>
 
-
-<button onclick="window.location.href='builder.html'" class="btn">
-    Собрать свой дрон
-</button>   
+    <div class="center-btn">
+    <button onclick="window.location.href='builder.html'" class="cta-btn">
+         СОБРАТЬ ДРОН
+    </button>
+</div>
     <div id="result"></div>
 </section>
 
