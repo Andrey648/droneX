@@ -344,23 +344,10 @@ script-src 'self' 'unsafe-inline';
 <section id="config" class="config">
     <h2 class="fade">Собери свой дрон</h2>
 
-    <select id="camera">
-        <option>FULLHD</option>
-        <option>2K</option>
-    </select>
 
-    <select id="battery">
-        <option>6S</option>
-        <option>4S</option>
-        <option>8S</option>
-    </select>
-
-    <select id="engine">
-        <option>Обычный</option>
-        <option>Pro version </option>
-    </select>
-
-    <button onclick="buildDrone()" class="btn">Собрать</button>
+<button onclick="window.location.href='builder.html'" class="btn">
+    Собрать свой дрон
+</button>   
     <div id="result"></div>
 </section>
 
