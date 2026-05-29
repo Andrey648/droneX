@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Drone Builder</title>
+
+<style>
+*{box-sizing:border-box;}
+
+body{
+margin:0;
+font-family:Inter, sans-serif;
+background: radial-gradient(circle at top, #111 0%, #070707 100%);
+color:#fff;
+padding:15px;
+padding-bottom:140px;
+}
+
+/* NAV */
+nav{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:14px 18px;
+background:rgba(255,255,255,0.05);
+backdrop-filter: blur(12px);
+border:1px solid rgba(255,255,255,0.08);
+border-radius:16px;
+margin-bottom:20px;
+}
+
+.nav-left{font-weight:800;}
+
+.nav-right a{
+text-decoration:none;
+color:#fff;
+font-size:13px;
+padding:8px 12px;
+border-radius:10px;
+background:rgba(255,255,255,0.06);
+margin-left:8px;
+}
+
+.nav-right a:hover{
+background:#00c853;
+color:#000;
+}
+
+/* GRID */
+.section{margin-bottom:25px;}
+
+.section h3{
+font-size:12px;
+opacity:0.6;
+letter-spacing:2px;
+margin-bottom:10px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:14px;
+}
+
+@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:600px){.grid{grid-template-columns:1fr;}}
+
+/* CARD */
+.card{
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.08);
+border-radius:18px;
+overflow:hidden;
+cursor:pointer;
+transition:.2s;
+}
+
+.card:hover{transform:translateY(-6px);}
+
+.card img{
+width:100%;
+aspect-ratio:1/1;
+object-fit:cover;
+}
+
+.info{padding:12px;}
+
+.name{font-size:14px;font-weight:700;}
+
+.price{
+margin-top:4px;
+color:#00e676;
+font-weight:800;
+font-size:13px;
+}
+
+.card.active{
+border:2px solid #00e676;
+}
+
+/* CONFIG PANEL */
+.configBox{
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.08);
+border-radius:16px;
+padding:12px;
+margin-top:20px;
+}
+
+.configItem{
+display:flex;
+justify-content:space-between;
+font-size:13px;
+opacity:0.85;
+margin:4px 0;
+}
+
+.totalLine{
+margin-top:10px;
+font-weight:800;
+color:#00e676;
+}
+
+/* BOTTOM */
+.bottomBar{
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+background:rgba(10,10,10,0.92);
+backdrop-filter: blur(12px);
+padding:14px 18px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+border-top:1px solid rgba(255,255,255,0.08);
+}
+
+.btn{
+background:linear-gradient(135deg,#00c853,#00e676);
+border:none;
+padding:12px 18px;
+border-radius:12px;
+color:#000;
+font-weight:800;
+cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+<div class="nav-left">🚁 DroneX Builder</div>
+<div class="nav-right">
+<a href="сайт дрона.html">Главная</a>
+<a href="cart.html">Корзина</a>
+</div>
+</nav>
+
+<div id="app"></div>
+
+<div class="configBox" id="configBox">
+<div style="opacity:0.6;font-size:12px;">ТВОЙ КОНФИГ</div>
+<div id="configList"></div>
+<div class="totalLine">ИТОГО: <span id="price">20000</span> ₽</div>
+</div>
+
+<div class="bottomBar">
+<button class="btn" onclick="save()">В корзину</button>
+</div>
+
+<script>
+
+const BASE_PRICE = 20000;
+
+const data = {
+battery:[
+{name:"4S",price:8000,img:"https://images.unsplash.com/photo-1603791440384-56cd371ee9a7"},
+{name:"6S",price:12000,img:"https://images.unsplash.com/photo-1581091215367-59ab6b3b7b1a"},
+{name:"8S",price:15000,img:"https://images.unsplash.com/photo-1508615070457-7baeba4003ab"}
+],
+motor:[
+{name:"2207",price:9000,img:"https://images.unsplash.com/photo-1503376780353-7e6692767b70"},
+{name:"2306",price:12000,img:"https://images.unsplash.com/photo-1520607162513-77705c0f0d4a"},
+{name:"2507",price:15000,img:"https://images.unsplash.com/photo-1526401485004-2aa6b5f9f9c0"}
+],
+camera:[
+{name:"HD",price:5000,img:"https://images.unsplash.com/photo-1516035069371-29a1b244cc32"},
+{name:"2K",price:9000,img:"https://images.unsplash.com/photo-1519183071298-a2962be96f83"},
+{name:"4K",price:15000,img:"https://images.unsplash.com/photo-1508610048659-a06c5f76ec0b"}
+]
+};
+
+let selected={};
+
+function render(){
+const app=document.getElementById("app");
+app.innerHTML="";
+
+for(let cat in data){
+
+let sec=document.createElement("div");
+sec.className="section";
+
+sec.innerHTML=`<h3>${cat.toUpperCase()}</h3><div class="grid"></div>`;
+let grid=sec.querySelector(".grid");
+
+data[cat].forEach(item=>{
+
+let div=document.createElement("div");
+div.className="card";
+
+div.innerHTML=`
+<img src="${item.img}">
+<div class="info">
+<div class="name">${item.name}</div>
+<div class="price">${item.price} ₽</div>
+</div>
+`;
+
+if(selected[cat]?.name===item.name){
+div.classList.add("active");
+}
+
+div.onclick=()=>{
+selected[cat]=item;
+render();
+update();
+};
+
+grid.appendChild(div);
+});
+
+app.appendChild(sec);
+}
+
+update();
+renderConfig();
+}
+
+function update(){
+let total = BASE_PRICE;
+
+for(let k in selected){
+total += selected[k].price;
+}
+
+document.getElementById("price").innerText = total;
+}
+
+function renderConfig(){
+const list = document.getElementById("configList");
+list.innerHTML="";
+
+for(let k in selected){
+let el = document.createElement("div");
+el.className="configItem";
+el.innerHTML=`<span>${k}</span><span>${selected[k].name} (${selected[k].price}₽)</span>`;
+list.appendChild(el);
+}
+}
+
+function save(){
+
+if(Object.keys(selected).length < Object.keys(data).length){
+alert("Выбери все детали");
+return;
+}
+
+let cart = JSON.parse(localStorage.getItem("cart")) || {};
+
+const totalPrice = BASE_PRICE + Object.values(selected).reduce((a,b)=>a+b.price,0);
+
+cart["DRONE_"+Date.now()] = {
+name:"Custom Drone",
+price: totalPrice,
+config:selected
+};
+
+localStorage.setItem("cart", JSON.stringify(cart));
+
+location.href="cart.html";
+}
+
+render();
+
+</script>
+
+</body>
+</html>
