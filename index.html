@@ -15,8 +15,13 @@
     color: #0a84ff;
 }
 
+a {
+    text-decoration: none;
+    color: #fff; /* чтобы всё было в одном стиле */
+}
+
 a:hover {
-    text-decoration: underline;
+    text-decoration: none;
 }
 * {
     margin: 0;
@@ -391,7 +396,7 @@ script-src 'self' 'unsafe-inline';
 <body>
 
 <nav>
-    <div>DroneX</div>
+<a href="#" class="logo" onclick="scrollToTop()">DroneX</a>
     <div>
         <a href="#hero">Главная</a>
         <a href="#products">Товары</a>
@@ -577,6 +582,13 @@ window.addEventListener("resize", () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 });
+function scrollToTop(){
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
 </script>
 </body>
 </html>
