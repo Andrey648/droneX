@@ -1,655 +1,256 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
-<link rel="icon" href="favicon1.png" type="image/png">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DroneX</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-
-<canvas id="stars"></canvas>
-
-<style>
-    a {
-    color: #0a84ff;
-}
-
-a {
-    text-decoration: none;
-    color: #fff; /* чтобы всё было в одном стиле */
-}
-
-a:hover {
-    text-decoration: none;
-}
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Inter', sans-serif;
-}
-
-body {
-    background: #000;
-    color: #fff;
-    scroll-behavior: smooth;
-}
-
-/* NAV */
-
-nav {
-    position: fixed;
-    width: 100%;
-    top: 0;
-    background: rgba(0,0,0,0.7);
-    backdrop-filter: blur(12px);
-    padding: 15px 40px;
-    display: flex;
-    justify-content: space-between;
-    z-index: 1000;
-}
-
-nav a {
-    color: #fff;
-    text-decoration: none;
-    margin-left: 20px;
-    opacity: 0.7;
-}
-
-nav a:hover {
-    opacity: 1;
-}
-
-/* HERO */
-.hero {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.hero h1 {
-    font-size: 70px;
-}
-
-.hero p {
-    opacity: 0.6;
-    margin: 20px 0;
-}
-
-/* BUTTON */
-.btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 12px 22px;
-    border-radius: 999px;
-
-    border: 1px solid #fff;
-    background: transparent;
-
-    color: #fff;
-    font-size: 14px;
-    font-weight: 500;
-
-    text-decoration: none;
-    cursor: pointer;
-
-    transition: 0.25s ease;
-    gap: 6px;
-}
-
-/* hover */
-.btn:hover {
-    background: #fff;
-    color: #000;
-    transform: translateY(-2px);
-}
-
-/* click effect */
-.btn:active {
-    transform: translateY(0px);
-}
-
-/* убрать дефолтные стили кнопки */
-button.btn {
-    font-family: inherit;
-}
-
-/* SECTIONS */
-section {
-    padding: 100px 40px;
-}
-
-/* PRODUCTS */
-.products {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
-    gap: 30px;
-}
-
-.card {
-    background: #111;
-    padding: 20px;
-    border-radius: 20px;
-    transition: 0.4s;
-}
-
-.card:hover {
-    transform: translateY(-10px);
-    background: #000000;
-}
-
-.card img {
-    width: 100%;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 10px;
-}
-
-/* CONFIG */
-.config select, .config button {
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-    border-radius: 10px;
-    border: none;
-}
-
-/* FOUNDER */
-.founder {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
-    align-items: center;
-}
-
-.founder img {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-/* ANIMATION */
-.fade {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: 1s;
-}
-
-.fade.show {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* CART */
-.cart {
-    cursor: pointer;
-}
-
-/* MOBILE */
-@media(max-width:768px){
-    .hero h1 {font-size: 40px;}
-}
-#stars {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    pointer-events: none;
-}
-
-/* ===== MOBILE FIX ===== */
-@media (max-width: 768px){
-
-    /* NAV */
-    nav{
-        padding:10px 15px;
-        flex-direction:column;
-        gap:10px;
-    }
-
-    nav div{
-        display:flex;
-        flex-wrap:wrap;
-        justify-content:center;
-        gap:10px;
-    }
-
-    /* HERO */
-    .hero h1{
-        font-size:40px;
-        text-align:center;
-    }
-
-    .hero p{
-        text-align:center;
-        padding:0 10px;
-    }
-
-    /* PRODUCTS */
-    .products{
-        grid-template-columns: 1fr;
-    }
-
-    .card{
-        padding:15px;
-    }
-
-    .card img{
-        height:180px;
-    }
-
-    /* CONTAINER (если есть flex как в product/cart) */
-    .container{
-        flex-direction:column;
-        padding:15px;
-    }
-
-    .left, .right{
-        width:100%;
-    }
-
-    /* CART ITEMS */
-    .item{
-        flex-direction:column;
-        align-items:flex-start;
-    }
-
-    .controls{
-        margin-left:0;
-        margin-top:10px;
-    }
-
-    .price{
-        margin-left:0;
-        margin-top:10px;
-    }
-
-    /* FOUNDER */
-    .founder{
-        flex-direction:column;
-        text-align:center;
-    }
-
-    .founder img{
-        margin:0 auto;
-    }
-}
-
-/* ===== УБИРАЕМ КРИВОЕ ВЫДЕЛЕНИЕ ===== */
-::selection {
-    background: rgba(255,255,255,0.2);
-    color: #fff;
-}
-
-button, a {
-    user-select: none;
-}
-
-* {
-    -webkit-tap-highlight-color: transparent;
-}
-
-
-/* ===== ЦЕНТРИРОВАНИЕ ===== */
-.center-btn{
-    display: flex;
-    justify-content: center;
-    margin-top: 60px;
-}
-
-
-/* ===== КНОПКА ===== */
-.cta-btn{
-    position: relative;
-
-    font-size: 26px;
-    padding: 18px 30px;
-
-    background: #000;
-    color: #fff;
-
-    border: 2px solid #fff;
-    border-radius: 8px;
-
-    font-weight: 700;
-    letter-spacing: 2px;
-
-    cursor: pointer;
-    overflow: hidden;
-
-    transition: all 0.25s ease;
-}
-
-
-/* ===== АНИМАЦИЯ СВЕЧЕНИЯ (главный эффект) ===== */
-.cta-btn::before{
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-
-    background: linear-gradient(
-        120deg,
-        transparent,
-        rgba(255,255,255,0.6),
-        transparent
-    );
-
-    transition: 0.5s;
-}
-
-/* при наведении пробегает свет */
-.cta-btn:hover::before{
-    left: 100%;
-}
-
-
-/* ===== HOVER ===== */
-.cta-btn:hover{
-    background: #fff;
-    color: #000;
-    transform: translateY(-3px);
-}
-
-
-/* ===== НАЖАТИЕ ===== */
-.cta-btn:active{
-    transform: scale(0.95);
-}
-
-
-/* ===== ПУЛЬСАЦИЯ (привлекает внимание) ===== */
-@keyframes pulse {
-    0% { box-shadow: 0 0 0 rgba(255,255,255,0.2); }
-    50% { box-shadow: 0 0 20px rgba(255,255,255,0.4); }
-    100% { box-shadow: 0 0 0 rgba(255,255,255,0.2); }
-}
-
-.cta-btn{
-    animation: pulse 2s infinite;
-}
-    
-
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DroneX — Будущее в воздухе</title>
+  <link rel="icon" type="image/png" href="logo.png">
+<link rel="apple-touch-icon" href="logo.png">
+<meta property="og:title" content="DroneX — Будущее в воздухе">
+<meta property="og:description" content="Технологические FPV-дроны и собственные летательные системы DroneX.">
+<meta property="og:image" content="logo.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="DroneX — Будущее в воздухе">
+<meta name="twitter:description" content="Технологические FPV-дроны и собственные летательные системы DroneX.">
+<meta name="twitter:image" content="logo.png">
+  <meta name="description" content="DroneX — технологический проект по разработке FPV-дронов и собственных летательных систем." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
 </head>
-<!-- SECURITY -->
-<meta http-equiv="Content-Security-Policy" content="
-default-src 'self';
-img-src 'self' data:;
-style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-font-src https://fonts.gstatic.com;
-script-src 'self' 'unsafe-inline';
-">
-
-<meta http-equiv="X-Frame-Options" content="DENY">
-<meta http-equiv="X-Content-Type-Options" content="nosniff">
-<meta name="referrer" content="no-referrer">
-
 <body>
+  <div class="noise"></div>
+  <header class="topbar" id="topbar">
+    <a class="brand" href="#top" aria-label="DroneX home">DRONEX<span>✦</span></a>
+    <nav class="nav">
+      <a href="#technology">Технологии</a>
+      <a href="#models">Модели</a>
+      <a href="#project">Проект</a>
+    </nav>
+    <a class="nav-cta" data-tg-link href="#">Telegram ↗</a>
+  </header>
 
-<nav>
-<a href="#" class="logo" onclick="scrollToTop()">DroneX</a>
-    <div>
-        <a href="#hero">Главная</a>
-        <a href="#products">Товары</a>
-        <a href="#config">Конфигуратор</a>
-        <a href="auth.html">Войти</a>
-        <a href="account.html">Кабинет</a> <!-- ВОТ СЮДА -->
-        <span class="cart" onclick="goCart()">🛒 (<span id="cartCount">0</span>)</span>
-    </div>
-</nav>
+  <main id="top">
+    <section class="hero section-pad">
+<section class="hero section-pad">
+  <div class="hero-glow"></div>
+  <div class="hero-grid"></div>
 
-<section id="hero" class="hero">
-    <h1 class="fade">DroneX</h1>
-    <p class="fade">Будущее дронов</p>
-    <a href="#products" class="btn fade">Смотреть</a>
-</section>
+<div class="hero-center reveal">
+  <div class="hero-title">
+    <span>DRONE</span><strong>X</strong>
+  </div>
 
-<section id="products">
-    <h2 class="fade">Наши дроны</h2>
-
-    <div class="products">
-
-        <div class="card fade">
-            <img src="iFlight-Nazgul-DC5-ECO-O4-Air-Unit-Pro_spje-pd.jpg">
-            <h3>Drone X1</h3>
-            <a href="product.html?drone=X1" class="btn">Подробнее</a>
-            <button class="btn" onclick="addToCart('X1')">В корзину</button>
-        </div>
-
-        <div class="card fade">
-            <img src="iFlight-Nazgul-DC5-ECO-O4-Air-Unit-Pro_spje-pd.jpg">
-            <h3>Drone X2</h3>
-            <a href="product.html?drone=X2" class="btn">Подробнее</a>
-            <button class="btn" onclick="addToCart('X2')">В корзину</button>
-        </div>
-
-        <div class="card fade">
-            <img src="iFlight-Nazgul-DC5-ECO-O4-Air-Unit-Pro_spje-pd.jpg">
-            <h3>Drone Pro</h3>
-            <a href="product.html?drone=PRO" class="btn">Подробнее</a>
-            <button class="btn" onclick="addToCart('PRO')">В корзину</button>
-        </div>
-
-    </div>
-</section>
-
-<section id="config" class="config">
-
-    <div class="center-btn">
-    <button onclick="window.location.href='builder.html'" class="cta-btn">
-         СОБРАТЬ ДРОН
-    </button>
+  <div class="hero-subtitle">
+    NEXT-GENERATION AERIAL SYSTEMS
+  </div>
 </div>
-    <div id="result"></div>
-</section>
 
-<section class="founder">
-    <img src="Z.jpg" class="fade">
-    <div>
-        <h2 class="fade">Основатель</h2>
-        <p class="fade">Создатель проекта вдохновился будущими технологиями и разработал автономные дроны.
-            DroneX — это проект, направленный на создание доступных и мощных дронов для каждого.
+  <div class="hero-orbit orbit-a"></div>
+  <div class="hero-orbit orbit-b"></div>
 
-Разработка была представлена в МГТУ им. Н.Э. Баумана, одном из ведущих технических вузов России, где заняла 3 место, подтвердив высокий уровень реализации и перспективность идеи.
+  <div class="hero-drone-shell">
+    <div class="drone-glow"></div>
 
-Наша цель — сделать профессиональные технологии автономного полёта доступными не только крупным компаниям, но и обычным пользователям, открывая новые возможности для съёмки, мониторинга и творчества.
-        </p>
+    <div class="drone-placeholder" aria-label="Drone render placeholder">
+      <div class="drone-crosshair"></div>
+      <div class="drone-body"></div>
+
+      <div class="motor motor-1"></div>
+      <div class="motor motor-2"></div>
+      <div class="motor motor-3"></div>
+      <div class="motor motor-4"></div>
+
+      <div class="arm arm-1"></div>
+      <div class="arm arm-2"></div>
+      <div class="arm arm-3"></div>
+      <div class="arm arm-4"></div>
     </div>
+  </div>
+
+  <div class="scroll-hint">
+    <span></span>
+    Прокрутите, чтобы исследовать
+  </div>
+</section>
+    </section>
+
+    <section class="intro section-pad">
+      <div class="section-label">01 / THE IDEA</div>
+      <div class="split">
+        <h2>Не просто магазин.<br><span>Технологический проект.</span></h2>
+        <p>Сайт DroneX становится лицом проекта: здесь мы показываем инженерный подход, продукты и собственную разработку. Покупка и конфигурация остаются в Telegram-боте — без регистрации, кабинетов и лишней формы.</p>
+      </div>
+    </section>
+
+    <section class="assembly" id="technology">
+      <div class="assembly-sticky">
+        <div class="assembly-bg"></div>
+        <div class="assembly-copy">
+          <div class="section-label" id="assemblyLabel">02 / BUILD SEQUENCE</div>
+          <div class="assembly-step"><span id="stepNumber">01</span><h2 id="stepTitle">Frame</h2><p id="stepText">The structure comes first.</p></div>
+        </div>
+        <div class="assembly-stage" id="assemblyStage">
+          <div class="component comp-frame" data-step="1">FRAME</div>
+          <div class="component comp-controller" data-step="2">FC</div>
+          <div class="component comp-motors" data-step="3"><i></i><i></i><i></i><i></i><b>MOTORS</b></div>
+          <div class="component comp-power" data-step="4">POWER</div>
+          <div class="component comp-gps" data-step="5">GPS</div>
+          <div class="component comp-camera" data-step="6">CAM</div>
+          <div class="component comp-top" data-step="7">SYSTEM</div>
+          <div class="assembly-complete">DRONEX</div>
+        </div>
+        <div class="assembly-progress"><span id="progressBar"></span></div>
+      </div>
+    </section>
+
+    <section class="technology section-pad" id="technology-section">
+
+  <div class="section-label">
+    03 / TECHNOLOGY
+  </div>
+
+  <div class="tech-grid">
+
+    <a class="tech-card tech-link" href="technology/flight.html">
+      <span>01</span>
+
+      <h3>
+        Управление полётом
+      </h3>
+
+      <p>
+        Контур управления рассчитан на стабильный FPV-полёт
+        и дальнейшее развитие собственной прошивки.
+      </p>
+
+      <div class="tech-card-arrow">↗</div>
+    </a>
+
+
+    <a class="tech-card tech-link" href="technology/navigation.html">
+      <span>02</span>
+
+      <h3>
+        Навигация
+      </h3>
+
+      <p>
+        GPS и навигационный слой для позиционирования,
+        телеметрии и автономных сценариев.
+      </p>
+
+      <div class="tech-card-arrow">↗</div>
+    </a>
+
+
+    <a class="tech-card tech-link" href="technology/vision.html">
+      <span>03</span>
+
+      <h3>
+        Визуальный канал
+      </h3>
+
+      <p>
+        FPV-камера как основной канал визуального управления
+        и контроля полёта.
+      </p>
+
+      <div class="tech-card-arrow">↗</div>
+    </a>
+
+
+    <a class="tech-card tech-link" href="technology/power.html">
+      <span>04</span>
+
+      <h3>
+        Силовая система
+      </h3>
+
+      <p>
+        Силовая система подбирается как единый комплекс:
+        тяга, питание, вес и время полёта.
+      </p>
+
+      <div class="tech-card-arrow">↗</div>
+    </a>
+
+  </div>
+
 </section>
 
-<script>
-const fades = document.querySelectorAll('.fade');
+    <section class="models section-pad" id="models">
+      <div class="section-label">04 / THE LINEUP</div>
+      <div class="models-head split"><h2>Три модели.<br><span>Одна система.</span></h2><p>Три характера. Одна экосистема DroneX.</p></div>
+      <div class="model-grid">
+        <article class="model-card">
+        <div class="model-art">
+  <img src="images/whoop.jpg" alt="DroneX WHOOP">
+</div>
+          <div class="model-copy"><div><h3>WHOOP</h3><p>Компактный FPV</p></div><a class="button button-ghost model-buy" data-product="whoop" data-tg-link href="#">Купить ↗</a></div>
+        </article>
+        <article class="model-card">
+         <div class="model-art">
+  <img src="images/5inch.jpg" alt="DroneX 5 inch">
+</div>
+          <div class="model-copy"><div><h3>5 дюймов</h3><p>Производительный FPV</p></div><a class="button button-ghost model-buy" data-product="5inch" data-tg-link href="#">Купить ↗</a></div>
+        </article>
+        <article class="model-card featured">
+         <div class="model-art">
+  <img src="images/dronex.jpg" alt="DroneX">
+</div>
+          <div class="model-copy"><div><h3>DRONEX</h3><p>Собственная разработка</p></div><a class="button button-solid model-buy" data-product="dronex" data-tg-link href="#">Купить ↗</a></div>
+        </article>
+      </div>
+    </section>
 
-function showOnScroll() {
-    fades.forEach(el => {
-        const top = el.getBoundingClientRect().top;
-        if (top < window.innerHeight - 100) {
-            el.classList.add('show');
-        }
-    });
-}
+    <section class="build-cta section-pad">
+      <div class="build-glow"></div>
+      <div class="section-label">05 / CONFIGURE</div>
+      <div class="build-content">
+        <h2>Соберите свой<br><span>DroneX.</span></h2>
+        <p>Выбери класс дрона и продолжи конфигурацию в Telegram. Никакой регистрации — только готовый сценарий заказа.</p>
+        <a class="button button-solid button-large" data-build-link data-tg-link href="#">Собрать в Telegram ↗</a>
+      </div>
+    </section>
 
-window.addEventListener('scroll', showOnScroll);
-showOnScroll();
+    <section class="project section-pad" id="project">
+      <div class="section-label">06 / THE PROJECT</div>
+      <div class="project-copy"><h2>Создан<br><span>с нуля.</span></h2><p>DroneX объединяет разработку аппаратной части, навигации, управления и собственного продукта. Эта страница — точка входа в проект. Telegram — точка действия.</p></div>
+    </section>
 
-// CART
-let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    <section class="final-cta">
+  <div class="final-grid"></div>
 
-function addToCart(item) {
-    cart.push(item);
-    localStorage.setItem('cart', JSON.stringify(cart));
-    updateCart();
-}
+  <div class="final-copy">
+    <div class="eyebrow">DRONEX</div>
 
-function updateCart() {
-    document.getElementById('cartCount').innerText = cart.length;
-}
+    <h2>
+      Будущее<br>
+      уже в воздухе.
+    </h2>
 
-function goCart() {
-    window.location.href = "cart.html";
-}
+    <a
+      class="button button-solid button-large"
+      data-tg-link
+      href="#"
+    >
+      Открыть Telegram ↗
+    </a>
+  </div>
 
-updateCart();
+  <div class="final-photo">
+    <img
+      src="images/dronex1.jpg"
+      alt="DroneX"
+    >
+  </div>
+</section>
+  </main>
 
-// CONFIG
-function buildDrone() {
-    result.innerText = camera.value + ", " + battery.value + ", " + engine.value;
-}
-</script>
-<script>
-const canvas = document.getElementById("stars");
-const ctx = canvas.getContext("2d");
-
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-// обычные звезды
-let stars = [];
-
-for (let i = 0; i < 150; i++) {
-    stars.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        size: Math.random() * 2
-    });
-}
-
-// метеоры
-let meteors = [];
-
-function createMeteor() {
-    meteors.push({
-        x: Math.random() * canvas.width,
-        y: 0,
-        vx: -(Math.random() * 4 + 2),
-        vy: (Math.random() * 6 + 3),
-        alpha: 1
-    });
-}
-
-// каждые 1.5 сек падающая звезда
-setInterval(createMeteor, 1500);
-
-function draw() {
-    // мягкое затухание (даёт след)
-    ctx.fillStyle = "rgba(0, 0, 0, 0.25)";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    // звезды
-    ctx.fillStyle = "white";
-    stars.forEach(s => {
-        ctx.fillRect(s.x, s.y, s.size, s.size);
-    });
-
-    // метеоры
-    meteors.forEach((m, i) => {
-        const prevX = m.x;
-        const prevY = m.y;
-
-        m.x += m.vx;
-        m.y += m.vy;
-        m.alpha -= 0.01;
-
-        ctx.strokeStyle = `rgba(255,255,255,${m.alpha})`;
-        ctx.lineWidth = 2;
-
-        ctx.beginPath();
-        ctx.moveTo(prevX, prevY);
-        ctx.lineTo(m.x, m.y);
-        ctx.stroke();
-
-        if (m.alpha <= 0) {
-            meteors.splice(i, 1);
-        }
-    });
-
-    requestAnimationFrame(draw);
-}
-
-draw();
-
-// resize
-window.addEventListener("resize", () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-});
-function scrollToTop(){
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-}
-
-</script>
+  <footer class="footer"><span>© DroneX</span><span>Built to fly.</span></footer>
+  <script src="app.js"></script>
 </body>
 </html>
-
-<footer style="padding:40px; background:#000; color:#888; font-size:12px; line-height:1.6; border-top:1px solid #222;">
-
-<p>
-① Trade-in value depends on the condition, year, and configuration of your device. Not all devices are eligible. You must be at least 18 years old to trade in a device for credit or a gift card. The trade-in value may be applied toward a new device purchase. Final value is determined after inspection. Additional taxes may apply under the laws of the Russian Federation. Valid ID may be required. Terms and conditions apply.
-</p>
-
-<br>
-
-<p>
-② For new subscribers only. Subscription renews automatically after trial period unless canceled. Offer available for eligible devices with latest software installed. One offer per account. Additional restrictions may apply.
-</p>
-
-<br>
-
-<p>
-1. Special discounts may be available for eligible customers. Please check availability before purchase.
-</p>
-
-<br><br>
-
-<div style="border-top:1px solid #222; padding-top:20px; display:flex; flex-wrap:wrap; gap:40px;">
-
-<div>
-<strong style="color:#fff;">DroneX Store</strong><br>
-Drones<br>
-</div>
-
-<div>
-<strong style="color:#fff;">Support</strong><br>
-Shipping<br>
-Payment<br>
-Warranty<br>
-Returns
-Telegram:<br> 
-<a href="https://t.me/droneDBN" target="_blank">@droneX_support</a>
-</div>
-
-<div>
-<strong style="color:#fff;">Company</strong><br>
-<a href="about.html" class="about-btn">О компании</a>
-
-Privacy Policy<br> 
-Telegram: <a href="https://t.me/droneDBN" target="_blank">@droneX</a>
-</div>
-
-</div>
-
-<br><br>
-
-<p style="opacity:0.5;">
-Russia | © 2026 DroneX. All rights reserved.
-</p>
-
-<p style="opacity:0.5;">
-Privacy Policy | Terms of Use | Sales Terms | Legal | Site Map
-</p>
-
-</footer>

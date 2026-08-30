@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>DroneX — Управление полётом</title>
+
+  <link rel="icon" type="image/png" href="../logo.png">
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="../styles.css">
+
+  <style>
+    .technology-page {
+      width: min(1100px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: 150px 0 100px;
+    }
+
+    .technology-back {
+      display: inline-flex;
+      margin-bottom: 70px;
+      color: #8f9bb2;
+      font-size: 13px;
+    }
+
+    .technology-page h1 {
+      font-size: clamp(52px, 8vw, 100px);
+      line-height: .9;
+      letter-spacing: -.06em;
+      margin: 0 0 35px;
+    }
+
+    .technology-page h1 span {
+      color: #89a7ff;
+    }
+
+    .technology-intro {
+      max-width: 700px;
+      color: #8996ab;
+      font-size: 18px;
+      line-height: 1.8;
+      margin-bottom: 100px;
+    }
+
+    .component-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      border-top: 1px solid rgba(170,195,255,.12);
+      border-left: 1px solid rgba(170,195,255,.12);
+    }
+
+    .component-card {
+      min-height: 240px;
+      padding: 32px;
+      border-right: 1px solid rgba(170,195,255,.12);
+      border-bottom: 1px solid rgba(170,195,255,.12);
+    }
+
+    .component-card span {
+      color: #63718a;
+      font-size: 11px;
+    }
+
+    .component-card h2 {
+      margin-top: 45px;
+      font-size: 28px;
+      letter-spacing: -.03em;
+    }
+
+    .component-card p {
+      color: #8290a6;
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    @media(max-width:700px) {
+      .component-list {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="noise"></div>
+
+  <header class="topbar">
+    <a class="brand" href="../index.html">
+      DRONEX<span>✦</span>
+    </a>
+
+    <nav class="nav">
+      <a href="../index.html#technology">Технологии</a>
+      <a href="../index.html#models">Модели</a>
+      <a href="../index.html#project">Проект</a>
+    </nav>
+
+    <a class="nav-cta" href="../index.html">
+      Назад ↗
+    </a>
+  </header>
+
+  <main class="technology-page">
+
+    <a class="technology-back" href="../index.html#technology">
+      ← Вернуться к технологиям
+    </a>
+
+    <div class="section-label">
+      01 / FLIGHT CONTROL
+    </div>
+
+    <h1>
+      Управление<br>
+      <span>полётом.</span>
+    </h1>
+
+    <p class="technology-intro">
+      Система управления объединяет полётный контроллер,
+      ESC, моторы, радиоприёмник и программную систему,
+      которая отвечает за стабилизацию и управление дроном.
+    </p>
+
+    <div class="component-list">
+
+      <article class="component-card">
+        <span>01</span>
+        <h2>Flight Controller</h2>
+        <p>
+          Центральный вычислительный модуль дрона.
+          Получает данные с датчиков и формирует команды
+          управления двигателями.
+        </p>
+      </article>
+
+      <article class="component-card">
+        <span>02</span>
+        <h2>ESC</h2>
+        <p>
+          Электронный регулятор скорости.
+          Управляет оборотами бесколлекторных двигателей
+          и передаёт энергию от аккумулятора к моторам.
+        </p>
+      </article>
+
+      <article class="component-card">
+        <span>03</span>
+        <h2>Моторы</h2>
+        <p>
+          Четыре бесколлекторных двигателя создают тягу
+          и позволяют изменять положение квадрокоптера
+          во время полёта.
+        </p>
+      </article>
+
+      <article class="component-card">
+        <span>04</span>
+        <h2>Радиоприёмник</h2>
+        <p>
+          Получает команды пилота с аппаратуры управления
+          и передаёт их полётному контроллеру.
+        </p>
+      </article>
+
+      <article class="component-card">
+        <span>05</span>
+        <h2>IMU</h2>
+        <p>
+          Набор инерциальных датчиков, включающий
+          акселерометр и гироскоп для определения
+          положения и угловой скорости дрона.
+        </p>
+      </article>
+
+      <article class="component-card">
+        <span>06</span>
+        <h2>Прошивка</h2>
+        <p>
+          Программный слой управляет стабилизацией,
+          обработкой датчиков и взаимодействием между
+          всеми электронными компонентами.
+        </p>
+      </article>
+
+    </div>
+
+  </main>
+
+</body>
+</html>

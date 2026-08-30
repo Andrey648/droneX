@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>DroneX — Силовая система</title>
+
+  <link rel="icon" type="image/png" href="../logo.png">
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="../styles.css">
+
+  <style>
+    .technology-page {
+      width: min(1100px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: 150px 0 100px;
+    }
+
+    .technology-back {
+      display: inline-flex;
+      margin-bottom: 70px;
+      color: #8f9bb2;
+      font-size: 13px;
+      transition: color 0.25s ease;
+    }
+
+    .technology-back:hover {
+      color: #ffffff;
+    }
+
+    .technology-page h1 {
+      font-size: clamp(52px, 8vw, 100px);
+      line-height: 0.9;
+      letter-spacing: -0.06em;
+      margin: 0 0 35px;
+    }
+
+    .technology-page h1 span {
+      color: #89a7ff;
+    }
+
+    .technology-intro {
+      max-width: 720px;
+      color: #8996ab;
+      font-size: 18px;
+      line-height: 1.8;
+      margin-bottom: 100px;
+    }
+
+    .component-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+
+      border-top: 1px solid rgba(170, 195, 255, 0.12);
+      border-left: 1px solid rgba(170, 195, 255, 0.12);
+    }
+
+    .component-card {
+      min-height: 260px;
+      padding: 32px;
+
+      border-right: 1px solid rgba(170, 195, 255, 0.12);
+      border-bottom: 1px solid rgba(170, 195, 255, 0.12);
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(10, 20, 38, 0.55),
+          rgba(3, 7, 17, 0.2)
+        );
+
+      transition:
+        background 0.35s ease,
+        transform 0.35s ease,
+        box-shadow 0.35s ease;
+    }
+
+    .component-card:hover {
+      background:
+        linear-gradient(
+          145deg,
+          rgba(20, 38, 70, 0.78),
+          rgba(5, 11, 23, 0.95)
+        );
+
+      transform: translateY(-5px);
+
+      box-shadow:
+        0 20px 60px rgba(35, 85, 190, 0.14);
+    }
+
+    .component-card span {
+      color: #63718a;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+    }
+
+    .component-card:hover span {
+      color: #9ab7ff;
+    }
+
+    .component-card h2 {
+      margin: 45px 0 18px;
+
+      font-size: 28px;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+    }
+
+    .component-card p {
+      margin: 0;
+
+      color: #8290a6;
+      font-size: 14px;
+      line-height: 1.75;
+    }
+
+    .technology-tip {
+      margin-top: 70px;
+      padding: 28px 30px;
+
+      border: 1px solid rgba(170, 195, 255, 0.12);
+
+      color: #8290a6;
+      font-size: 14px;
+      line-height: 1.8;
+
+      background: rgba(7, 16, 30, 0.45);
+    }
+
+    .technology-tip strong {
+      color: #dfe7f7;
+      font-weight: 500;
+    }
+
+    @media (max-width: 700px) {
+      .technology-page {
+        padding-top: 120px;
+      }
+
+      .component-list {
+        grid-template-columns: 1fr;
+      }
+
+      .technology-intro {
+        font-size: 16px;
+        margin-bottom: 60px;
+      }
+
+      .technology-page h1 {
+        font-size: 58px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="noise"></div>
+
+  <header class="topbar">
+
+    <a class="brand" href="../index.html">
+      DRONEX<span>✦</span>
+    </a>
+
+    <nav class="nav">
+      <a href="../index.html#technology">Технологии</a>
+      <a href="../index.html#models">Модели</a>
+      <a href="../index.html#project">Проект</a>
+    </nav>
+
+    <a class="nav-cta" href="../index.html#technology">
+      Назад ↗
+    </a>
+
+  </header>
+
+  <main class="technology-page">
+
+    <a
+      class="technology-back"
+      href="../index.html#technology"
+    >
+      ← Вернуться к технологиям
+    </a>
+
+    <div class="section-label">
+      04 / POWER SYSTEM
+    </div>
+
+    <h1>
+      Силовая<br>
+      <span>система.</span>
+    </h1>
+
+    <p class="technology-intro">
+      Силовая система определяет тягу, динамику, продолжительность
+      полёта и надёжность DroneX. Она объединяет аккумулятор,
+      регуляторы скорости, двигатели, распределение питания
+      и элементы защиты электрической цепи.
+    </p>
+
+    <div class="component-list">
+
+      <article class="component-card">
+        <span>01</span>
+
+        <h2>Аккумулятор</h2>
+
+        <p>
+          Основной источник энергии дрона. Для FPV-систем
+          обычно применяются LiPo-аккумуляторы с несколькими
+          последовательно соединёнными ячейками. Выбор
+          напряжения и ёмкости влияет на тягу, вес
+          и продолжительность полёта.
+        </p>
+      </article>
+
+      <article class="component-card">
+        <span>02</span>
+
+        <h2>Моторы</h2>
+
+        <p>
+          Бесколлекторные двигатели преобразуют электрическую
+          энергию в тягу. Их KV, размер, масса и рабочее
+          напряжение должны соответствовать пропеллерам,
+          аккумулятору и массе аппарата.
+        </p>
+      </article>
+
+      <article class="component-card">
+        <span>03</span>
+
+        <h2>ESC</h2>
+
+        <p>
+          Регуляторы скорости управляют током,
+          поступающим на двигатели. Для квадрокоптера
+          требуется четыре канала управления, а номинал
+          регуляторов должен соответствовать предполагаемому
+          току силовой установки.
+        </p>
+      </article>
+
+      <article class="component-card">
+        <span>04</span>
+
+        <h2>Распределение питания</h2>
+
+        <p>
+          Система распределения питания соединяет аккумулятор
+          с ESC и другими потребителями. Она должна выдерживать
+          рабочий ток всей силовой установки и обеспечивать
+          надёжное соединение всех силовых линий.
+        </p>
+      </article>
+
+      <article class="component-card">
+        <span>05</span>
+
+        <h2>XT60</h2>
+
+        <p>
+          Силовой разъём соединяет аккумулятор с бортовой
+          системой. Он должен соответствовать предполагаемому
+          току и иметь надёжный контакт, поскольку через него
+          проходит основной поток энергии.
+        </p>
+      </article>
+
+      <article class="component-card">
+        <span>06</span>
+
+        <h2>Конденсатор</h2>
+
+        <p>
+          Конденсатор устанавливается в силовую цепь
+          для снижения высокочастотных выбросов напряжения
+          и уменьшения электрических помех, возникающих
+          при резких изменениях нагрузки двигателей.
+        </p>
+      </article>
+
+      <article class="component-card">
+        <span>07</span>
+
+        <h2>Провода</h2>
+
+        <p>
+          Силовые провода должны иметь подходящее сечение
+          и минимально необходимую длину. Неправильный выбор
+          проводов увеличивает сопротивление, нагрев
+          и потери энергии.
+        </p>
+      </article>
+
+      <article class="component-card">
+        <span>08</span>
+
+        <h2>Пропеллеры</h2>
+
+        <p>
+          Пропеллеры непосредственно преобразуют вращение
+          моторов в тягу. Их диаметр, шаг, количество лопастей
+          и материал влияют на ускорение, потребляемый ток
+          и эффективность силовой установки.
+        </p>
+      </article>
+
+      <article class="component-card">
+        <span>09</span>
+
+        <h2>Стабилизатор питания</h2>
+
+        <p>
+          Стабилизатор или BEC преобразует напряжение
+          аккумулятора в напряжение, подходящее для отдельных
+          электронных компонентов, например камеры,
+          приёмника или других периферийных устройств.
+        </p>
+      </article>
+
+      <article class="component-card">
+        <span>10</span>
+
+        <h2>Тепловой режим</h2>
+
+        <p>
+          Во время полёта моторы и ESC выделяют тепло.
+          Поэтому при проектировании необходимо учитывать
+          охлаждение, воздушный поток, рабочий ток
+          и продолжительность нагрузки.
+        </p>
+      </article>
+
+    </div>
+
+    <div class="technology-tip">
+      <strong>Как работает система:</strong>
+      аккумулятор подаёт энергию в силовую цепь,
+      ESC регулируют её подачу на четыре двигателя,
+      двигатели вращают пропеллеры и создают тягу,
+      а система питания обеспечивает необходимым
+      напряжением остальные электронные компоненты.
+    </div>
+
+  </main>
+
+</body>
+</html>

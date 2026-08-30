@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>DroneX — Визуальный канал</title>
+
+  <link rel="icon" type="image/png" href="../logo.png">
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="../styles.css">
+
+  <style>
+    .technology-page {
+      width: min(1100px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: 150px 0 100px;
+    }
+
+    .technology-back {
+      display: inline-flex;
+      margin-bottom: 70px;
+      color: #8f9bb2;
+      font-size: 13px;
+      transition: color 0.25s ease;
+    }
+
+    .technology-back:hover {
+      color: #ffffff;
+    }
+
+    .technology-page h1 {
+      font-size: clamp(52px, 8vw, 100px);
+      line-height: 0.9;
+      letter-spacing: -0.06em;
+      margin: 0 0 35px;
+    }
+
+    .technology-page h1 span {
+      color: #89a7ff;
+    }
+
+    .technology-intro {
+      max-width: 720px;
+      color: #8996ab;
+      font-size: 18px;
+      line-height: 1.8;
+      margin-bottom: 100px;
+    }
+
+    .component-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+
+      border-top: 1px solid rgba(170, 195, 255, 0.12);
+      border-left: 1px solid rgba(170, 195, 255, 0.12);
+    }
+
+    .component-card {
+      min-height: 260px;
+      padding: 32px;
+
+      border-right: 1px solid rgba(170, 195, 255, 0.12);
+      border-bottom: 1px solid rgba(170, 195, 255, 0.12);
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(10, 20, 38, 0.55),
+          rgba(3, 7, 17, 0.2)
+        );
+
+      transition:
+        background 0.35s ease,
+        transform 0.35s ease,
+        box-shadow 0.35s ease;
+    }
+
+    .component-card:hover {
+      background:
+        linear-gradient(
+          145deg,
+          rgba(20, 38, 70, 0.78),
+          rgba(5, 11, 23, 0.95)
+        );
+
+      transform: translateY(-5px);
+
+      box-shadow:
+        0 20px 60px rgba(35, 85, 190, 0.14);
+    }
+
+    .component-card span {
+      color: #63718a;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+    }
+
+    .component-card:hover span {
+      color: #9ab7ff;
+    }
+
+    .component-card h2 {
+      margin: 45px 0 18px;
+
+      font-size: 28px;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+    }
+
+    .component-card p {
+      margin: 0;
+
+      color: #8290a6;
+      font-size: 14px;
+      line-height: 1.75;
+    }
+
+    .technology-tip {
+      margin-top: 70px;
+      padding: 28px 30px;
+
+      border: 1px solid rgba(170, 195, 255, 0.12);
+
+      color: #8290a6;
+      font-size: 14px;
+      line-height: 1.8;
+
+      background:
+        rgba(7, 16, 30, 0.45);
+    }
+
+    .technology-tip strong {
+      color: #dfe7f7;
+      font-weight: 500;
+    }
+
+    @media (max-width: 700px) {
+      .technology-page {
+        padding-top: 120px;
+      }
+
+      .component-list {
+        grid-template-columns: 1fr;
+      }
+
+      .technology-intro {
+        font-size: 16px;
+        margin-bottom: 60px;
+      }
+
+      .technology-page h1 {
+        font-size: 58px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="noise"></div>
+
+  <header class="topbar">
+
+    <a class="brand" href="../index.html">
+      DRONEX<span>✦</span>
+    </a>
+
+    <nav class="nav">
+      <a href="../index.html#technology">Технологии</a>
+      <a href="../index.html#models">Модели</a>
+      <a href="../index.html#project">Проект</a>
+    </nav>
+
+    <a class="nav-cta" href="../index.html#technology">
+      Назад ↗
+    </a>
+
+  </header>
+
+  <main class="technology-page">
+
+    <a
+      class="technology-back"
+      href="../index.html#technology"
+    >
+      ← Вернуться к технологиям
+    </a>
+
+    <div class="section-label">
+      03 / VISUAL CHANNEL
+    </div>
+
+    <h1>
+      Визуальный<br>
+      <span>канал.</span>
+    </h1>
+
+    <p class="technology-intro">
+      Визуальный канал отвечает за получение изображения
+      с борта DroneX и передачу его пилоту в реальном
+      времени. Система объединяет FPV-камеру,
+      видеопередатчик, антенну и устройство отображения.
+    </p>
+
+    <div class="component-list">
+
+      <article class="component-card">
+        <span>01</span>
+
+        <h2>FPV-камера</h2>
+
+        <p>
+          Камера устанавливается в передней части корпуса
+          и формирует изображение, которое используется
+          пилотом для ориентации и управления дроном.
+          Для FPV важны задержка, качество изображения
+          и работа при изменении освещения.
+        </p>
+      </article>
+
+      <article class="component-card">
+        <span>02</span>
+
+        <h2>Объектив</h2>
+
+        <p>
+          Объектив определяет угол обзора камеры.
+          Более широкий угол позволяет лучше видеть
+          пространство вокруг аппарата, а наклон камеры
+          подбирается под скорость и стиль полёта.
+        </p>
+      </article>
+
+      <article class="component-card">
+        <span>03</span>
+
+        <h2>Видеопередатчик</h2>
+
+        <p>
+          Видеопередатчик получает изображение от камеры
+          и передаёт видеосигнал на землю. Его параметры
+          влияют на дальность связи, стабильность канала
+          и качество изображения.
+        </p>
+      </article>
+
+      <article class="component-card">
+        <span>04</span>
+
+        <h2>Антенна</h2>
+
+        <p>
+          Антенна формирует радиоканал между дроном
+          и принимающей системой. Она должна быть
+          правильно закреплена и расположена так,
+          чтобы конструкция дрона минимально экранировала
+          сигнал.
+        </p>
+      </article>
+
+      <article class="component-card">
+        <span>05</span>
+
+        <h2>Питание видеосистемы</h2>
+
+        <p>
+          Камера и видеопередатчик требуют стабильного
+          питания. В зависимости от выбранных компонентов
+          питание может проходить через стабилизатор
+          или отдельную линию силовой системы.
+        </p>
+      </article>
+
+      <article class="component-card">
+        <span>06</span>
+
+        <h2>Видеолиния</h2>
+
+        <p>
+          Между камерой и передатчиком используется
+          видеосоединение. Качество подключения,
+          прокладка проводов и защита от помех влияют
+          на стабильность изображения.
+        </p>
+      </article>
+
+      <article class="component-card">
+        <span>07</span>
+
+        <h2>FPV-очки</h2>
+
+        <p>
+          FPV-очки принимают видеосигнал с борта
+          и показывают изображение пилоту. Система
+          отображения должна обеспечивать минимальную
+          задержку и комфортное восприятие изображения.
+        </p>
+      </article>
+
+      <article class="component-card">
+        <span>08</span>
+
+        <h2>OSD</h2>
+
+        <p>
+          Экранная информация позволяет вывести поверх
+          видеопотока полезные параметры: напряжение,
+          состояние GPS, время полёта и другие данные,
+          необходимые для контроля аппарата.
+        </p>
+      </article>
+
+    </div>
+
+    <div class="technology-tip">
+      <strong>Как работает система:</strong>
+      камера формирует изображение, видеопередатчик
+      кодирует и передаёт его по радиоканалу,
+      а FPV-очки или монитор принимают сигнал
+      и отображают картинку пилоту.
+    </div>
+
+  </main>
+
+</body>
+</html>
