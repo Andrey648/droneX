@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DroneX — Будущее в воздухе</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#03040A; --panel:#0A0E1C; --panel2:#060811; --line:#1B2540; --border2:#28345A;
+  --text:#EEF2FF; --muted:#8C97BD; --accent:#3FA9FF; --accent2:#7FD4FF;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+:root:not([data-theme="light"]){}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px); scroll-behavior:smooth}
+html,body{height:100%}
+body{margin:0;background:
+    radial-gradient(60vw 40vh at 15% 0%, rgba(63,169,255,.16), transparent 60%),
+    radial-gradient(50vw 40vh at 90% 30%, rgba(63,169,255,.10), transparent 60%),
+    var(--bg);
+  color:var(--text);font-family:"IBM Plex Sans",system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.reveal{opacity:0;transform:translateY(36px) scale(.985);filter:blur(8px);transition:opacity 1.1s cubic-bezier(.16,1,.3,1), transform 1.1s cubic-bezier(.16,1,.3,1), filter 1.1s cubic-bezier(.16,1,.3,1)}
+.reveal.visible{opacity:1;transform:none;filter:blur(0)}
+.glow-pill{position:absolute;border-radius:999px;filter:blur(2px);pointer-events:none}
+
+.tech-card{display:block;position:relative;overflow:hidden}
+.tech-more{display:inline-block;margin-top:12px;font-family:"Space Grotesk",sans-serif;font-size:13px;font-weight:600;color:var(--accent2);opacity:.85;transition:transform .25s ease,opacity .25s ease}
+.tech-card:hover .tech-more{transform:translateX(4px);opacity:1}
+.tech-card::after{content:"";position:absolute;inset:0;background:radial-gradient(120px 120px at var(--mx,50%) var(--my,0%), rgba(63,169,255,.18), transparent 70%);opacity:0;transition:opacity .3s ease}
+.tech-card:hover::after{opacity:1}
+
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
+.bg-float{position:fixed;border-radius:40%;pointer-events:none;z-index:0;filter:blur(40px);opacity:.35}
+.bg-float-inner{animation:floaty 9s ease-in-out infinite;width:100%;height:100%;background:inherit;border-radius:inherit}
+
+#page-home{transition:opacity .45s ease, transform .45s ease}
+.detail-page{display:none;min-height:100vh}
+.detail-page.active{display:block}
+.page-fade{animation:pagein .5s ease both}
+@keyframes pagein{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.spec-row{display:flex;justify-content:space-between;padding:12px 16px;border:1px solid var(--line);border-radius:12px;background:var(--panel);font-size:13.5px}
+.spec-row + .spec-row{margin-top:8px}
+.back-link{display:inline-flex;align-items:center;gap:8px;font-size:14px;color:var(--muted)}
+.back-link:hover{color:var(--accent2)}
+
+.model-photo{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:10px;background:linear-gradient(135deg,#0A0E1C,#060811);border:1px dashed var(--border2)}
+
+.chip-group{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.chip{padding:10px 16px;border:1px solid var(--border2);border-radius:999px;font-size:13.5px;color:var(--muted);cursor:pointer;transition:all .2s ease;background:var(--panel)}
+.chip.selected{border-color:var(--accent2);color:var(--text);box-shadow:0 0 16px rgba(63,169,255,.3);background:linear-gradient(180deg,rgba(63,169,255,.12),transparent)}
+.chip:hover{border-color:var(--accent)}
+.config-summary{margin-top:28px;padding:20px;border:1px solid var(--line);border-radius:14px;background:var(--panel);font-size:14px;line-height:1.7}
+h1,h2,h3{font-family:"Space Grotesk",sans-serif;margin:0}
+p{margin:0}
+a{text-decoration:none;color:inherit}
+.mono{font-family:"JetBrains Mono",monospace}
+.wrap{max-width:1080px;margin:0 auto;padding-left:24px;padding-right:24px}
+.eyebrow{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.04em;color:var(--muted)}
+.rule{height:1px;background:var(--line);border:none;margin:0}
+.section{padding:64px 0}
+.section-alt{background:var(--panel2)}
+
+nav{position:sticky;top:0;z-index:20;background:rgba(6,8,17,.55);backdrop-filter:blur(22px) saturate(180%);-webkit-backdrop-filter:blur(22px) saturate(180%);border-bottom:1px solid rgba(255,255,255,.08);padding-top:env(safe-area-inset-top,0px);transition:background .3s ease}
+.nav-row{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;max-width:1080px;margin:0 auto}
+.logo{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:19px;letter-spacing:.01em}
+.logo span{color:var(--accent)}
+.nav-links{display:none;gap:28px}
+.nav-links a{font-size:14px;color:var(--muted)}
+.nav-links a:hover{color:var(--text)}
+.tg-pill{padding:9px 18px;border:1px solid rgba(255,255,255,.14);border-radius:999px;font-size:13px;min-height:38px;display:inline-flex;align-items:center;background:rgba(255,255,255,.06);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);box-shadow:inset 0 1px 0 rgba(255,255,255,.16), 0 4px 16px rgba(0,0,0,.25);transition:transform .35s cubic-bezier(.16,1,.3,1), border-color .3s ease}
+.tg-pill:hover{border-color:rgba(127,212,255,.5);color:var(--accent2);transform:translateY(-1px)}
+.tg-pill:active{transform:scale(.96)}
+
+.btn{position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:15px 26px;font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:15px;border-radius:999px;min-height:48px;transition:transform .45s cubic-bezier(.16,1,.3,1), box-shadow .45s cubic-bezier(.16,1,.3,1)}
+.btn::before{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(180deg,rgba(255,255,255,.35),rgba(255,255,255,0) 55%);opacity:.6;pointer-events:none}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:scale(.96)}
+.btn-primary{background:linear-gradient(135deg,var(--accent2),var(--accent));color:#03040A;box-shadow:0 0 0 1px rgba(255,255,255,.25) inset, 0 8px 28px rgba(63,169,255,.4)}
+.btn-primary:hover{box-shadow:0 0 0 1px rgba(255,255,255,.35) inset, 0 12px 34px rgba(63,169,255,.55)}
+.btn-ghost{border:1px solid rgba(255,255,255,.14);color:var(--text);background:rgba(255,255,255,.06);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);box-shadow:inset 0 1px 0 rgba(255,255,255,.14), 0 4px 18px rgba(0,0,0,.25)}
+.btn-ghost:hover{border-color:rgba(127,212,255,.55);color:var(--accent2)}
+
+.hero h1{font-size:clamp(40px,9vw,84px);line-height:.98;font-weight:700}
+.hero p{font-size:clamp(15px,2.4vw,18px);line-height:1.55;color:var(--muted);max-width:480px;margin-top:18px}
+
+.card{background:linear-gradient(180deg,rgba(63,169,255,.07),rgba(63,169,255,.02)),var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px;transition:border-color .3s ease,transform .3s ease}
+.card:hover{border-color:rgba(63,169,255,.45);transform:translateY(-2px)}
+
+.seq-row{display:flex;align-items:center;gap:14px;padding:14px 16px;background:linear-gradient(180deg,rgba(63,169,255,.06),rgba(63,169,255,.01)),var(--panel);border:1px solid var(--line);border-radius:14px}
+.seq-num{color:var(--accent2);font-size:12px;width:22px;flex-shrink:0}
+
+.grid-2{display:grid;grid-template-columns:1fr;gap:12px}
+.grid-3{display:grid;grid-template-columns:1fr;gap:12px}
+
+.model-row{display:flex;justify-content:space-between;align-items:center;gap:16px}
+
+@media (min-width:720px){
+  .nav-links{display:flex}
+  .grid-2{grid-template-columns:1fr 1fr}
+  .grid-3{grid-template-columns:repeat(3,1fr)}
+  .section{padding:96px 0}
+}
+</style>
+</head>
+<body>
+
+<div class="bg-float" data-speed="0.12" style="width:260px;height:260px;top:8%;left:-60px"><div class="bg-float-inner" style="background:#3FA9FF"></div></div>
+<div class="bg-float" data-speed="0.2" style="width:200px;height:200px;top:55%;right:-50px"><div class="bg-float-inner" style="background:#7FD4FF;animation-delay:2.5s"></div></div>
+<div class="bg-float" data-speed="0.08" style="width:180px;height:180px;bottom:5%;left:20%"><div class="bg-float-inner" style="background:#2E6FE0;animation-delay:5s"></div></div>
+
+<div id="page-home">
+<nav>
+  <div class="nav-row">
+    <div class="logo">DRONE<span>X</span></div>
+    <div class="nav-links">
+      <a href="#technology">Технологии</a>
+      <a href="#models">Модели</a>
+      <a href="#project">Проект</a>
+    </div>
+    <a class="tg-pill" href="https://t.me/droneX_Pay_bot" target="_blank" rel="noopener">Telegram</a>
+  </div>
+</nav>
+
+<header class="hero wrap reveal" style="padding:72px 24px 48px">
+  <div class="mono eyebrow" style="margin-bottom:18px">05:12:44 · alt 118m · signal 98%</div>
+  <h1>Дрон<br>строится<br>по частям.</h1>
+  <p>DroneX — инженерный проект по разработке FPV-дронов и собственных лётных систем. Смотрите, как всё устроено, а собираете и заказываете — в Telegram.</p>
+  <div style="margin-top:28px">
+    <a class="btn btn-primary" href="https://t.me/droneX_Pay_bot" target="_blank" rel="noopener">Открыть Telegram</a>
+  </div>
+</header>
+
+<hr class="rule">
+
+<section class="section reveal">
+  <div class="wrap">
+    <div class="mono eyebrow">01 · ИДЕЯ</div>
+    <h2 style="font-size:clamp(26px,4vw,38px);line-height:1.15;margin-top:10px;max-width:640px">Не витрина. Инженерный подход.</h2>
+    <p style="font-size:15px;line-height:1.6;color:var(--muted);margin-top:14px;max-width:560px">Здесь мы показываем, как проектируются рамы, электроника и силовые системы наших дронов. Конфигурация и покупка проходят в Telegram-боте — без регистрации и личных кабинетов.</p>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section class="section section-alt reveal">
+  <div class="wrap">
+    <div class="mono eyebrow">02 · ИЗ ЧЕГО СОБРАН</div>
+    <h2 style="font-size:clamp(26px,4vw,38px);line-height:1.15;margin-top:10px">Сначала рама.<br>Потом всё остальное.</h2>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-top:24px;max-width:520px">
+      <div class="seq-row"><span class="mono seq-num">01</span><span style="font-size:14px">Frame — несущая рама</span></div>
+      <div class="seq-row"><span class="mono seq-num">02</span><span style="font-size:14px">FC — полётный контроллер</span></div>
+      <div class="seq-row"><span class="mono seq-num">03</span><span style="font-size:14px">Motors + Power — тяга и питание</span></div>
+      <div class="seq-row"><span class="mono seq-num">04</span><span style="font-size:14px">GPS — навигация и телеметрия</span></div>
+      <div class="seq-row"><span class="mono seq-num">05</span><span style="font-size:14px">Cam — визуальный канал</span></div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section class="section reveal" id="technology">
+  <div class="wrap">
+    <div class="mono eyebrow">03 · ТЕХНОЛОГИИ</div>
+    <h2 style="font-size:clamp(26px,4vw,38px);line-height:1.15;margin-top:10px">Четыре слоя системы.</h2>
+    <div class="grid-2" style="margin-top:24px">
+      <a href="#tech-flight" class="card tech-card"><h3 style="font-size:17px;margin-bottom:8px">Управление полётом</h3><p style="font-size:13.5px;line-height:1.5;color:var(--muted)">Контур управления рассчитан на стабильный FPV-полёт и развитие собственной прошивки.</p><span class="tech-more">Как это работает →</span></a>
+      <a href="#tech-nav" class="card tech-card"><h3 style="font-size:17px;margin-bottom:8px">Навигация</h3><p style="font-size:13.5px;line-height:1.5;color:var(--muted)">GPS-слой для позиционирования, телеметрии и автономных сценариев полёта.</p><span class="tech-more">Как это работает →</span></a>
+      <a href="#tech-vision" class="card tech-card"><h3 style="font-size:17px;margin-bottom:8px">Визуальный канал</h3><p style="font-size:13.5px;line-height:1.5;color:var(--muted)">FPV-камера — основной канал визуального контроля и управления в полёте.</p><span class="tech-more">Как это работает →</span></a>
+      <a href="#tech-power" class="card tech-card"><h3 style="font-size:17px;margin-bottom:8px">Силовая система</h3><p style="font-size:13.5px;line-height:1.5;color:var(--muted)">Тяга, питание, вес и время полёта подбираются как единый комплекс.</p><span class="tech-more">Как это работает →</span></a>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section class="section section-alt reveal" id="models">
+  <div class="wrap">
+    <div class="mono eyebrow">04 · МОДЕЛИ</div>
+    <h2 style="font-size:clamp(26px,4vw,38px);line-height:1.15;margin-top:10px">Три модели. Одна система.</h2>
+    <div class="grid-3" style="margin-top:24px">
+      <div class="card">
+        <!-- Чтобы поставить фото: замените src у img.model-photo на ссылку/base64 вашего фото -->
+        <img class="model-photo" src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='260'%3E%3Crect width='400' height='260' fill='%230A0E1C'/%3E%3C/svg%3E" alt="WHOOP" onerror="this.style.display='none'">
+        <h3 style="font-size:17px;margin-top:14px">WHOOP</h3>
+        <p style="font-size:13px;color:var(--muted);margin-top:4px">Компактный FPV</p>
+        <div style="display:flex;gap:8px;margin-top:14px">
+          <a class="btn btn-ghost" href="https://t.me/droneX_Pay_bot" target="_blank" rel="noopener" style="padding:10px 16px;font-size:13px;min-height:40px;flex:1">Купить</a>
+          <a class="btn btn-primary" href="#configurator" data-model="WHOOP" style="padding:10px 16px;font-size:13px;min-height:40px;flex:1">Собрать</a>
+        </div>
+      </div>
+      <div class="card">
+        <img class="model-photo" src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='260'%3E%3Crect width='400' height='260' fill='%230A0E1C'/%3E%3C/svg%3E" alt="5 дюймов" onerror="this.style.display='none'">
+        <h3 style="font-size:17px;margin-top:14px">5 дюймов</h3>
+        <p style="font-size:13px;color:var(--muted);margin-top:4px">Производительный FPV</p>
+        <div style="display:flex;gap:8px;margin-top:14px">
+          <a class="btn btn-ghost" href="https://t.me/droneX_Pay_bot" target="_blank" rel="noopener" style="padding:10px 16px;font-size:13px;min-height:40px;flex:1">Купить</a>
+          <a class="btn btn-primary" href="#configurator" data-model="5 дюймов" style="padding:10px 16px;font-size:13px;min-height:40px;flex:1">Собрать</a>
+        </div>
+      </div>
+      <div class="card">
+        <img class="model-photo" src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='260'%3E%3Crect width='400' height='260' fill='%230A0E1C'/%3E%3C/svg%3E" alt="DRONEX" onerror="this.style.display='none'">
+        <h3 style="font-size:17px;margin-top:14px">DRONEX</h3>
+        <p style="font-size:13px;color:var(--muted);margin-top:4px">Собственная разработка</p>
+        <div style="display:flex;gap:8px;margin-top:14px">
+          <a class="btn btn-ghost" href="https://t.me/droneX_Pay_bot" target="_blank" rel="noopener" style="padding:10px 16px;font-size:13px;min-height:40px;flex:1">Купить</a>
+          <a class="btn btn-primary" href="#configurator" data-model="DRONEX" style="padding:10px 16px;font-size:13px;min-height:40px;flex:1">Собрать</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section class="section reveal">
+  <div class="wrap">
+    <div class="mono eyebrow">05 · СБОРКА</div>
+    <h2 style="font-size:clamp(26px,4vw,38px);line-height:1.2;margin-top:10px;max-width:560px">Соберите свой DroneX.</h2>
+    <p style="font-size:15px;line-height:1.6;color:var(--muted);margin-top:14px;max-width:520px">Выберите класс дрона и продолжите конфигурацию в Telegram. Никакой регистрации — только готовый сценарий заказа.</p>
+    <div style="margin-top:24px">
+      <a class="btn btn-primary" href="https://t.me/droneX_Pay_bot" target="_blank" rel="noopener">Собрать в Telegram</a>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section class="section section-alt reveal" id="project">
+  <div class="wrap">
+    <div class="mono eyebrow">06 · ПРОЕКТ</div>
+    <h2 style="font-size:clamp(26px,4vw,38px);line-height:1.15;margin-top:10px;max-width:560px">Создан с нуля.</h2>
+    <p style="font-size:15px;line-height:1.6;color:var(--muted);margin-top:14px;max-width:560px">DroneX объединяет разработку рамы, навигации, управления и собственного продукта. Этот сайт — точка входа в проект. Telegram — точка действия.</p>
+  </div>
+</section>
+
+<section class="wrap reveal" style="padding:72px 24px 56px;border-top:1px solid var(--line)">
+  <h2 style="font-size:clamp(30px,6vw,52px);line-height:1.05">Будущее уже<br>в воздухе.</h2>
+  <div style="margin-top:24px">
+    <a class="btn btn-primary" href="https://t.me/droneX_Pay_bot" target="_blank" rel="noopener">Открыть Telegram</a>
+  </div>
+</section>
+
+<footer class="wrap reveal" style="display:flex;justify-content:space-between;align-items:center;padding:20px 24px;border-top:1px solid var(--line);padding-bottom:calc(20px + env(safe-area-inset-bottom,0px))">
+  <span style="font-size:12px;color:var(--muted)">© DroneX</span>
+  <span class="mono" style="font-size:11px;color:var(--muted)">Built to fly.</span>
+</footer>
+</div>
+
+<!-- DETAIL PAGE: FLIGHT CONTROL -->
+<div class="detail-page" id="tech-flight" style="background:var(--bg)">
+  <div class="wrap" style="padding:32px 24px 64px">
+    <a href="#technology" class="back-link">← Назад к технологиям</a>
+    <div class="mono eyebrow" style="margin-top:28px">03.1 · УПРАВЛЕНИЕ ПОЛЁТОМ</div>
+    <h2 style="font-size:clamp(28px,5vw,44px);line-height:1.1;margin-top:10px;max-width:600px">Контур, который держит дрон в воздухе.</h2>
+    <p style="font-size:15px;line-height:1.65;color:var(--muted);margin-top:18px;max-width:560px">Полётный контроллер опрашивает гироскоп и акселерометр тысячи раз в секунду и пересчитывает команды на моторы почти без задержки. Это даёт пилоту ощущение прямого управления даже на высокой скорости.</p>
+    <div style="display:flex;flex-direction:column;gap:0;margin-top:28px;max-width:520px">
+      <div class="spec-row"><span style="color:var(--muted)">Частота контура</span><span class="mono">до 8 кГц</span></div>
+      <div class="spec-row"><span style="color:var(--muted)">Режимы полёта</span><span class="mono">Acro / Angle / Horizon</span></div>
+      <div class="spec-row"><span style="color:var(--muted)">Прошивка</span><span class="mono">открытая, дорабатываемая</span></div>
+      <div class="spec-row"><span style="color:var(--muted)">Защита от вибраций</span><span class="mono">программная фильтрация</span></div>
+    </div>
+    <a class="btn btn-primary" href="https://t.me/droneX_Pay_bot" target="_blank" rel="noopener" style="margin-top:32px">Обсудить в Telegram</a>
+  </div>
+</div>
+
+<!-- DETAIL PAGE: NAVIGATION -->
+<div class="detail-page" id="tech-nav" style="background:var(--bg)">
+  <div class="wrap" style="padding:32px 24px 64px">
+    <a href="#technology" class="back-link">← Назад к технологиям</a>
+    <div class="mono eyebrow" style="margin-top:28px">03.2 · НАВИГАЦИЯ</div>
+    <h2 style="font-size:clamp(28px,5vw,44px);line-height:1.1;margin-top:10px;max-width:600px">Дрон всегда знает, где он.</h2>
+    <p style="font-size:15px;line-height:1.65;color:var(--muted);margin-top:18px;max-width:560px">GPS-модуль определяет координаты, высоту и скорость, сохраняет точку взлёта и в критической ситуации умеет вернуть дрон домой. Данные телеметрии передаются пилоту в реальном времени.</p>
+    <div style="display:flex;flex-direction:column;gap:0;margin-top:28px;max-width:520px">
+      <div class="spec-row"><span style="color:var(--muted)">Точность позиционирования</span><span class="mono">~1–2 м</span></div>
+      <div class="spec-row"><span style="color:var(--muted)">Возврат домой</span><span class="mono">автоматический (RTH)</span></div>
+      <div class="spec-row"><span style="color:var(--muted)">Телеметрия</span><span class="mono">высота / скорость / GPS-фикс</span></div>
+      <div class="spec-row"><span style="color:var(--muted)">Холодный старт</span><span class="mono">&lt; 30 с</span></div>
+    </div>
+    <a class="btn btn-primary" href="https://t.me/droneX_Pay_bot" target="_blank" rel="noopener" style="margin-top:32px">Обсудить в Telegram</a>
+  </div>
+</div>
+
+<!-- DETAIL PAGE: VISION -->
+<div class="detail-page" id="tech-vision" style="background:var(--bg)">
+  <div class="wrap" style="padding:32px 24px 64px">
+    <a href="#technology" class="back-link">← Назад к технологиям</a>
+    <div class="mono eyebrow" style="margin-top:28px">03.3 · ВИЗУАЛЬНЫЙ КАНАЛ</div>
+    <h2 style="font-size:clamp(28px,5vw,44px);line-height:1.1;margin-top:10px;max-width:600px">Глаза пилота на скорости 100 км/ч.</h2>
+    <p style="font-size:15px;line-height:1.65;color:var(--muted);margin-top:18px;max-width:560px">FPV-камера передаёт картинку на очки пилота с минимальной задержкой. От качества и стабильности этого канала напрямую зависит безопасность и точность управления в полёте.</p>
+    <div style="display:flex;flex-direction:column;gap:0;margin-top:28px;max-width:520px">
+      <div class="spec-row"><span style="color:var(--muted)">Задержка сигнала</span><span class="mono">&lt; 30 мс</span></div>
+      <div class="spec-row"><span style="color:var(--muted)">Дальность канала</span><span class="mono">до нескольких км</span></div>
+      <div class="spec-row"><span style="color:var(--muted)">Угол обзора</span><span class="mono">широкий, для FPV</span></div>
+      <div class="spec-row"><span style="color:var(--muted)">Формат</span><span class="mono">аналог / цифра</span></div>
+    </div>
+    <a class="btn btn-primary" href="https://t.me/droneX_Pay_bot" target="_blank" rel="noopener" style="margin-top:32px">Обсудить в Telegram</a>
+  </div>
+</div>
+
+<!-- DETAIL PAGE: POWER -->
+<div class="detail-page" id="tech-power" style="background:var(--bg)">
+  <div class="wrap" style="padding:32px 24px 64px">
+    <a href="#technology" class="back-link">← Назад к технологиям</a>
+    <div class="mono eyebrow" style="margin-top:28px">03.4 · СИЛОВАЯ СИСТЕМА</div>
+    <h2 style="font-size:clamp(28px,5vw,44px);line-height:1.1;margin-top:10px;max-width:600px">Тяга, вес и время полёта — один расчёт.</h2>
+    <p style="font-size:15px;line-height:1.65;color:var(--muted);margin-top:18px;max-width:560px">Моторы, регуляторы и аккумулятор подбираются как единая система: соотношение тяги к весу определяет манёвренность, а ёмкость батареи — реальное время в воздухе.</p>
+    <div style="display:flex;flex-direction:column;gap:0;margin-top:28px;max-width:520px">
+      <div class="spec-row"><span style="color:var(--muted)">Тяговооружённость</span><span class="mono">рассчитывается под класс</span></div>
+      <div class="spec-row"><span style="color:var(--muted)">Регуляторы (ESC)</span><span class="mono">быстрый отклик</span></div>
+      <div class="spec-row"><span style="color:var(--muted)">Аккумулятор</span><span class="mono">LiPo, под модель</span></div>
+      <div class="spec-row"><span style="color:var(--muted)">Время полёта</span><span class="mono">зависит от класса дрона</span></div>
+    </div>
+    <a class="btn btn-primary" href="https://t.me/droneX_Pay_bot" target="_blank" rel="noopener" style="margin-top:32px">Обсудить в Telegram</a>
+  </div>
+</div>
+
+<!-- DETAIL PAGE: CONFIGURATOR -->
+<div class="detail-page" id="configurator" style="background:var(--bg)">
+  <div class="wrap" style="padding:32px 24px 64px">
+    <a href="#models" class="back-link">← Назад к моделям</a>
+    <div class="mono eyebrow" style="margin-top:28px">КОНФИГУРАТОР</div>
+    <h2 style="font-size:clamp(28px,5vw,44px);line-height:1.1;margin-top:10px;max-width:600px">Соберите свой DroneX.</h2>
+    <p style="font-size:15px;line-height:1.65;color:var(--muted);margin-top:18px;max-width:560px">Выберите параметры — финальную сборку и цену подтвердит менеджер в Telegram.</p>
+
+    <div style="margin-top:32px">
+      <div class="mono eyebrow">МОДЕЛЬ</div>
+      <div class="chip-group" data-group="model">
+        <div class="chip" data-value="WHOOP">WHOOP</div>
+        <div class="chip" data-value="5 дюймов">5 дюймов</div>
+        <div class="chip" data-value="DRONEX">DRONEX</div>
+      </div>
+    </div>
+
+    <div style="margin-top:24px">
+      <div class="mono eyebrow">КАМЕРА</div>
+      <div class="chip-group" data-group="camera">
+        <div class="chip" data-value="Аналоговая">Аналоговая</div>
+        <div class="chip" data-value="Цифровая">Цифровая (HD)</div>
+      </div>
+    </div>
+
+    <div style="margin-top:24px">
+      <div class="mono eyebrow">GPS-МОДУЛЬ</div>
+      <div class="chip-group" data-group="gps">
+        <div class="chip" data-value="Без GPS">Без GPS</div>
+        <div class="chip" data-value="С GPS">С GPS + Return-to-Home</div>
+      </div>
+    </div>
+
+    <div style="margin-top:24px">
+      <div class="mono eyebrow">АККУМУЛЯТОР</div>
+      <div class="chip-group" data-group="battery">
+        <div class="chip" data-value="Стандарт">Стандарт</div>
+        <div class="chip" data-value="Увеличенный">Увеличенный ресурс</div>
+      </div>
+    </div>
+
+    <div class="config-summary" id="config-summary">Выберите параметры выше — здесь появится сводка сборки.</div>
+
+    <a class="btn btn-primary" id="config-submit" href="https://t.me/droneX_Pay_bot" target="_blank" rel="noopener" style="margin-top:20px">Отправить сборку в Telegram</a>
+  </div>
+</div>
+
+<script>
+(function(){
+  var state = {model:null, camera:null, gps:null, battery:null};
+  var labels = {model:'Модель', camera:'Камера', gps:'GPS', battery:'Аккумулятор'};
+
+  document.querySelectorAll('a[data-model]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var val = btn.getAttribute('data-model');
+      var group = document.querySelector('.chip-group[data-group="model"]');
+      group.querySelectorAll('.chip').forEach(function(c){
+        c.classList.toggle('selected', c.getAttribute('data-value') === val);
+      });
+      state.model = val;
+      updateSummary();
+    });
+  });
+
+  document.querySelectorAll('.chip-group').forEach(function(group){
+    var key = group.getAttribute('data-group');
+    group.querySelectorAll('.chip').forEach(function(chip){
+      chip.addEventListener('click', function(){
+        group.querySelectorAll('.chip').forEach(function(c){ c.classList.remove('selected'); });
+        chip.classList.add('selected');
+        state[key] = chip.getAttribute('data-value');
+        updateSummary();
+      });
+    });
+  });
+
+  function updateSummary(){
+    var lines = [];
+    ['model','camera','gps','battery'].forEach(function(key){
+      if(state[key]) lines.push(labels[key] + ': ' + state[key]);
+    });
+    var summaryEl = document.getElementById('config-summary');
+    var submitBtn = document.getElementById('config-submit');
+    if(lines.length === 0){
+      summaryEl.textContent = 'Выберите параметры выше — здесь появится сводка сборки.';
+      submitBtn.href = 'https://t.me/droneX_Pay_bot';
+      return;
+    }
+    summaryEl.innerHTML = lines.join('<br>');
+    var msg = 'Хочу собрать DroneX:\n' + lines.join('\n');
+    submitBtn.href = 'https://t.me/droneX_Pay_bot?text=' + encodeURIComponent(msg);
+  }
+})();
+</script>
+
+<script>
+(function(){
+  var homeIds = ['tech-flight','tech-nav','tech-vision','tech-power','configurator'];
+  function route(){
+    var hash = location.hash.replace('#','');
+    var home = document.getElementById('page-home');
+    var isDetail = homeIds.indexOf(hash) !== -1;
+    homeIds.forEach(function(id){
+      var el = document.getElementById(id);
+      el.classList.remove('active','page-fade');
+    });
+    if(isDetail){
+      home.style.display = 'none';
+      var target = document.getElementById(hash);
+      target.classList.add('active','page-fade');
+      window.scrollTo(0,0);
+      document.title = target.querySelector('h2').textContent + ' — DroneX';
+    } else {
+      home.style.display = '';
+      document.title = 'DroneX — Будущее в воздухе';
+    }
+  }
+  window.addEventListener('hashchange', route);
+  route();
+})();
+</script>
+
+<script>
+(function(){
+  var blobs = Array.prototype.slice.call(document.querySelectorAll('.bg-float'));
+  var current = 0, target = 0, ticking = false;
+  function onScroll(){
+    target = window.scrollY || window.pageYOffset;
+    if(!ticking){ requestAnimationFrame(render); ticking = true; }
+  }
+  function render(){
+    current += (target - current) * 0.08;
+    blobs.forEach(function(el){
+      var speed = parseFloat(el.getAttribute('data-speed')) || 0.1;
+      el.style.transform = 'translate3d(0,' + (current * speed) + 'px,0)';
+    });
+    if(Math.abs(target - current) > 0.5){
+      requestAnimationFrame(render);
+    } else {
+      ticking = false;
+    }
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script>
+<script>
+(function(){
+  var els = document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)){ els.forEach(function(e){e.classList.add('visible')}); return; }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, {threshold:0.15, rootMargin:'0px 0px -60px 0px'});
+  els.forEach(function(e){ io.observe(e); });
+})();
+</script>
+</body>
+</html>
